@@ -15,7 +15,6 @@ export default function Home(props) {
 
   useEffect(() => {
     // example how to use state && dispatch in app
-    dispatch({type:'LOGGED_IN_USER',payload:{id:1,username:"dnelbandDAking"}})
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
   },[])
 
@@ -29,6 +28,8 @@ export default function Home(props) {
     </div>
   )
 }
+
+Home.layout = "main"
 
 export const getServerSideProps = async () => {
   const postsResponse = await excuteQuery({

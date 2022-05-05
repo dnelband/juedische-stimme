@@ -6,12 +6,11 @@ export default async (req, res) => {
         const result = await excuteQuery({
             query: `SELECT * 
                     FROM wp_posts
-                    WHERE post_type='page'
+                    WHERE menu_type='main'
                     AND post_status='publish'
                     ORDER BY post_date DESC
                     `
         });
-        // console.log( "result:",result);
         res.json(result)
     } catch ( error ) {
         console.log(error );

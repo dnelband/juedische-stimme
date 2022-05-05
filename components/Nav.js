@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 function Nav() {
 
@@ -11,7 +12,6 @@ function Nav() {
     async function getNavData(){
         const res  = await fetch('/api/nav')
         const data = await res.json();
-        // console.log(data,"data")
         setNavItems(data)
     }
 
@@ -23,7 +23,7 @@ function Nav() {
             </li>
             {navItems.map((item,index)=>(
                 <li key={index}>
-                    <a href={item.post_name}>{item.post_title}</a>
+                    <Link href={'/'+item.post_name}>{item.post_title}</Link>
                 </li>
             ))}
         </ul>

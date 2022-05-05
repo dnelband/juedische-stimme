@@ -1,11 +1,15 @@
 import { useState, useEffect, useReducer, createContext } from "react";
 import { user } from "./reducers/user";
 import { posts } from "./reducers/posts";
+import { mediaItems } from "./reducers/mediaItems";
+import { comments } from "./reducers/comments";
 
 // initial state
 const initialState = {
   user: null,
-  posts: []
+  posts: [],
+  mediaItems:[],
+  comments:[]
 };
 
 // create context
@@ -19,10 +23,16 @@ const combineReducers = (...reducers) => (state, action) => {
 
 // context provider
 const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(combineReducers(user,posts), initialState); // pass more reducers combineReducers(user, blogs, products)
+  const [state, dispatch] = useReducer(combineReducers(user,posts,mediaItems,comments), initialState); // pass more reducers combineReducers(user, blogs, products)
   const value = { state, dispatch };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export { Context, Provider };
+
+/* ADDING A NEW REDUCER */
+// create reducers/myreducer.js
+// import { myreducer } from './reducers/myreducer.js
+// add myreducer property to initialState
+// add myreducer to combineReducers in Provider

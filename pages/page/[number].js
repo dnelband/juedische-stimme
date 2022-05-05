@@ -29,6 +29,8 @@ export default function PostsPage(props) {
   )
 }
 
+PostsPage.layout = "main"
+
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
@@ -37,7 +39,7 @@ export const getServerSideProps = async (context) => {
               WHERE post_status='publish'
               ORDER BY post_date DESC
               LIMIT 10
-              OFFSET ${context.query.id * 10}
+              OFFSET ${(context.query.number - 1)  * 50}
               `
     });
     const posts = JSON.stringify(postsResponse);

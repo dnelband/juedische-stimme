@@ -2,6 +2,7 @@ import React from 'react'
 import AdminNav from './Nav'
 
 import styles from '../../styles/Admin.module.css'
+import Link from 'next/link'
 
 function AdminLayout({ children }) {
   return (
@@ -12,7 +13,7 @@ function AdminLayout({ children }) {
         <ul>
           <li>NEW</li>
           <ul>
-            <li><a href="/admin/posts/create">POST</a></li>
+            <li><Link href="/admin/posts/create">POST</Link></li>
             <li>MEDIA</li>
             <li>PAGE</li>
             <li>GALLERY</li>

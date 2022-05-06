@@ -35,7 +35,7 @@ AdminPostsPage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
-      query: `SELECT ID, post_title, post_name, post_status, comment_status, post_date_gmt, post_modified_gmt, post_type, post_author, post_parent
+      query: `SELECT ID, post_title, post_name, post_status, comment_status, post_date, post_date, post_modified, post_type, post_author, post_parent
               FROM wp_posts 
               WHERE post_status='publish'
               ORDER BY post_date DESC
@@ -46,7 +46,8 @@ export const getServerSideProps = async (context) => {
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
-        posts:posts
+        posts:posts,
+        pageNum:context.query.number
       }
     }
   }

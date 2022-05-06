@@ -49,7 +49,8 @@ export const getServerSideProps = async (context) => {
     const comments = JSON.stringify(commentsResponse);
     return {
       props:{
-        comments:comments
+        comments:comments,
+        pageNum:context.query.number
       }
     }
   }

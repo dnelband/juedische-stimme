@@ -1,18 +1,83 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFormik } from 'formik';
+import axios from 'axios';
+import dateTimeHelper from '../../helpers/dateTimeHelper';
 
-export default function PostForm({post}) {
-  
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const PostForm = ({post}) => {
 
-    const onSubmit = data => console.log(data);
-    console.log(errors);
-    
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" placeholder="Post Title" {...register("post_title", {required: true, maxLength: 80,value: post ? post.post_title : "" })} />
-            <textarea style={{width:"100%", height:"600px"}} {...register("post_content", {required: true, maxLength: 100,value:post ? post.post_content : ""})}/>
-            <input type="submit" value={"publish"} />
-        </form>
-    );
-}
+  // Pass the useFormik() hook initial form values and a submit function that will
+  // be called when the form is submitted
+  const formik = useFormik({
+    initialValues: {
+        post_author: post ? post.post_author : '',
+        post_date: post ? post.post_date : '',
+        post_date_gmt:post ? post.post_date_gmt : '',
+        post_content:post ? post.post_content : '',
+        post_title:post ? post.post_title : '',
+        post_excerpt: post ? post.post_excerpt : '',
+        post_status: post ? post.post_status : '',
+        comment_status: post ? post.comment_status : '',
+        ping_status: post ? post.ping_status : '',
+        post_password: post ? post.post_password : '',
+        post_name: post ? post.post_name : '',
+        to_ping: post ? post.to_ping : '',
+        pinged: post ? post.pinged : '',
+        post_modified: post ? post.post_modified : '',
+        post_modified_gmt: post ? post.post_modified_gmt : '',
+        post_content_filtered: post ? post.post_content_filtered : '',
+        post_parent: post ? post.post_parent : '',
+        guid: post ? post.guid : '',
+        menu_order: post ? post.menu_order : '',
+        post_type: post ? post.post_type : '',
+        post_mime_type:  post ? post.post_mime_type : '',
+        comment_count: post ? post.comment_count : '',
+        menu_type: post ? post.menu_type : ''
+    },
+    onSubmit: values => {
+
+        // alert(JSON.stringify(values, null, 2));
+
+        axios({
+            method: post ? 'put' : 'post',
+            url: `/api/posts${post ? "/" + post['ID'] : ''}`,
+            data: {
+                ...values,
+                post_date:post ? post.post_date : dateTimeHelper(new Date()),
+                // post_date_gmt: like post_date but one hour less
+                post_name:values.post_title.replace(/\s+/g, '-').toLowerCase().replace(),
+                post_modified_date: dateTimeHelper(new Date())
+            }
+        }).then((response) => {
+            console.log(response,"response on post");
+            console.log('NOW NEEDS TO GO TO POSTS LIST!')
+        }, (error) => {
+            console.log(error, "ERROR on post");
+            console.log('NEW NEEDS TO DISPLAY ERRORS!')
+        });
+
+    },
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <label htmlFor="post_title">POST TITLE</label>
+      <input
+        id="post_title"
+        name="post_title"
+        type="post_title"
+        onChange={formik.handleChange}
+        value={formik.values.post_title}
+      />
+      <textarea 
+            id="post_content"
+            name="post_content"
+            type="post_content"
+            onChange={formik.handleChange}
+            value={formik.values.post_content}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default PostForm;

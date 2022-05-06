@@ -48,7 +48,8 @@ export const getServerSideProps = async (context) => {
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
-        posts:posts
+        posts:posts,
+        pageNum:context.query.number
       }
     }
   }

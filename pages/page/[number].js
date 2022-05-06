@@ -13,6 +13,9 @@ export default function PostsPage(props) {
   
   const { state, dispatch } = useContext(Context);
 
+  console.log(props.pageNum,"PAGE NUM")
+
+
   useEffect(() => {
     // example how to use state && dispatch in app
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
@@ -22,9 +25,15 @@ export default function PostsPage(props) {
   if (state.posts){
     postsDisplay = <Posts posts={state.posts}/>
   }
+
   return (
     <div className={styles.container}>
         {postsDisplay}
+        {/* PAGINATION NEEDED */
+        // get total number of items - in this case post by COUNTING the table rows
+        // create a reuseable component to display pagination
+        // pass props.pageNum, totalItemsCount, itemsPerPage to pagination component
+        /* /PAGINATION NEEDED */}
     </div>
   )
 }
@@ -39,13 +48,14 @@ export const getServerSideProps = async (context) => {
               WHERE post_status='publish'
               ORDER BY post_date DESC
               LIMIT 10
-              OFFSET ${(context.query.number - 1)  * 50}
+              OFFSET ${(context.query.number - 1)  * 10}
               `
     });
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
-        posts:posts
+        posts:posts,
+        pageNum:context.query.number
       }
     }
   }

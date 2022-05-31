@@ -8,6 +8,7 @@ import excuteQuery from '../../../../lib/db'
 
 import { Context } from "../../../../context";
 import AdminPosts from '../../../../components/admin/Posts'
+import { selectPosts } from '../../../../lib/queries'
 
 export default function AdminPostsPage(props) {
   

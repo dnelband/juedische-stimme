@@ -1,15 +1,11 @@
 import excuteQuery from '../../lib/db'
+import { selectNavItems } from '../../lib/queries';
 
 export default async (req, res) => {
     try {
         // console.log("req params", req.params)
         const result = await excuteQuery({
-            query: `SELECT * 
-                    FROM wp_posts
-                    WHERE menu_type='main'
-                    AND post_status='publish'
-                    ORDER BY post_date DESC
-                    `
+            query: selectNavItems()
         });
         res.json(result)
     } catch ( error ) {

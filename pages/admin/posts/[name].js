@@ -1,18 +1,16 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
-import { useContext, useEffect } from 'react'
-
+ // import { useContext, useEffect } from 'react'
 import styles from '../../../styles/Home.module.css'
 import excuteQuery from '../../../lib/db'
-
-import { Context } from "../../../context"
+// import { Context } from "../../../context"
 import PostForm from '../../../components/admin/PostForm'
+import { selectPostByName } from '../../../lib/queries'
 
 export default function EditPostPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
   const post = JSON.parse(props.post)[0];
+
+  console.log(post, " POST ADMIN")
 
   return (
     <div className={styles.container}>
@@ -26,14 +24,12 @@ export default function EditPostPage(props) {
 EditPostPage.layout = "admin";
 
 export const getServerSideProps = async (context) => {
-
-    const postsResponse = await excuteQuery({
-    query: `SELECT * 
-            FROM wp_posts 
-            WHERE post_name='${context.query.name}'
-            AND post_status="publish"
-            `
+  const postsResponse = await excuteQuery({
+    query: selectPostByName(context.query.name)
   });
+
+  console.log(context.query.name)
+
   const post = JSON.stringify(postsResponse);
   return {
     props:{

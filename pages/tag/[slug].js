@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { Context } from "../../context";
 import excuteQuery from '../../lib/db'
-import { selectPosts } from '../../lib/queries'
+import { selectPosts, selectPostsByTag } from '../../lib/queries'
 import Posts from '../../components/Posts'
 import styles from '../../styles/Home.module.css'
 
@@ -13,7 +13,8 @@ export default function PostsPage(props) {
     // example how to use state && dispatch in app
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
   },[])
-  
+  console.log(state.posts, " POSTS ON TAG ")
+
   return (
     <div className={styles.container}>
         {state.posts ? <Posts posts={state.posts}/> : ""}
@@ -30,13 +31,13 @@ PostsPage.layout = "main"
 
 export const getServerSideProps = async (context) => {
     const postsResponse = await excuteQuery({
-      query: selectPosts(10,context.query.number)
+      query: selectPostsByTag(context.query.slug)
     });
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
         posts:posts,
-        pageNum:context.query.number
+        slug:context.query.slug
       }
     }
   }

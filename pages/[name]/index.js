@@ -1,17 +1,16 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
-import { useContext, useEffect } from 'react'
+//  import { useContext, useEffect } from 'react'
 
 import styles from '../../styles/Home.module.css'
 import excuteQuery from '../../lib/db'
 
-import { Context } from "../../context"
+// import { Context } from "../../context"
 import Post from '../../components/Post'
+import { selectPostByName } from '../../lib/queries'
 
 export default function ContentPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
+
   const page = JSON.parse(props.page)[0];
 
   return (
@@ -24,13 +23,8 @@ export default function ContentPage(props) {
 ContentPage.layout = "main";
 
 export const getServerSideProps = async (context) => {
-
-    const pageResponse = await excuteQuery({
-    query: `SELECT * 
-            FROM wp_posts 
-            WHERE post_name='${context.query.name}'
-            AND post_status="publish"
-            `
+  const pageResponse = await excuteQuery({
+    query: selectPostByName(context.query.name)
   });
   const page = JSON.stringify(pageResponse);
   return {

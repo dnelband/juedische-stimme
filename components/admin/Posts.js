@@ -11,6 +11,7 @@ function Posts(props) {
             method: 'delete',
             url: `/api/posts/${post['ID']}`
         }).then((response) => {
+            window.location.reload()
             console.log(response,"response on delete post");
             console.log('NOW NEEDS TO REFRESH POSTS LIST!');
         }, (error) => {

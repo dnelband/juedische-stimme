@@ -32,15 +32,15 @@ export default async (req, res) => {
 
                 const result = await excuteQuery({
                     query: `INSERT INTO wp_posts (
-                                            post_date,
-                                            post_title,
-                                            post_content,
-                                            post_excerpt,
-                                            post_name,
-                                            to_ping,
-                                            pinged,
-                                            post_content_filtered
-                                        )
+                                    post_date,
+                                    post_title,
+                                    post_content,
+                                    post_excerpt,
+                                    post_name,
+                                    to_ping,
+                                    pinged,
+                                    post_content_filtered
+                            )
                             VALUES (
                                     '${post_date}',
                                     '${post_title}',
@@ -50,7 +50,7 @@ export default async (req, res) => {
                                     '${to_ping}',
                                     '${pinged}',
                                     '${post_content_filtered}'
-                                    );
+                            );
                             `
                 });
 

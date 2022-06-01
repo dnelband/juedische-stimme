@@ -3,7 +3,6 @@ import { selectNavItems } from '../../lib/queries';
 
 export default async (req, res) => {
     try {
-        // console.log("req params", req.params)
         const result = await excuteQuery({
             query: selectNavItems()
         });

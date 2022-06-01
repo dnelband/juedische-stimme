@@ -1,12 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
 import { useContext, useEffect } from 'react'
-
-import styles from '../../../../styles/Home.module.css'
-import excuteQuery from '../../../../lib/db'
-
 import { Context } from "../../../../context";
+import excuteQuery from '../../../../lib/db'
+import { selectComments } from '../../../../lib/queries'
+import styles from '../../../../styles/Home.module.css'
 
 export default function AdminCommentsPage(props) {
   
@@ -18,6 +14,11 @@ export default function AdminCommentsPage(props) {
 
     let commentsDisplay;
     if (state.comments){
+      /* 
+        TO DO
+        none of the pages should have data - render logic. 
+        mapping of comments should be handled by a dedicated Comments or AdminComments component 
+      */
         commentsDisplay = state.comments.map((comment,index) => (
             <li key={index}>{comment.comment_content}</li>
         ))
@@ -37,20 +38,14 @@ export default function AdminCommentsPage(props) {
 AdminCommentsPage.layout = "admin"
 
 export const getServerSideProps = async (context) => {
-    
-    const commentsResponse = await excuteQuery({
-      query: `SELECT *
-              FROM wp_comments 
-              ORDER BY comment_ID DESC
-              LIMIT 50
-              OFFSET ${(context.query.number - 1)  * 50}
-              `
-    });
-    const comments = JSON.stringify(commentsResponse);
-    return {
-      props:{
-        comments:comments,
-        pageNum:context.query.number
-      }
+  const commentsResponse = await excuteQuery({
+    query: selectComments(50,context.query.number)
+  });
+  const comments = JSON.stringify(commentsResponse);
+  return {
+    props:{
+      comments:comments,
+      pageNum:context.query.number
     }
   }
+}

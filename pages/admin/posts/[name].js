@@ -6,12 +6,8 @@ import PostForm from '../../../components/admin/PostForm'
 import { selectPostByName } from '../../../lib/queries'
 
 export default function EditPostPage(props) {
-  
   // const { state, dispatch } = useContext(Context);
   const post = JSON.parse(props.post)[0];
-
-  console.log(post, " POST ADMIN")
-
   return (
     <div className={styles.container}>
       <PostForm
@@ -27,9 +23,6 @@ export const getServerSideProps = async (context) => {
   const postsResponse = await excuteQuery({
     query: selectPostByName(context.query.name)
   });
-
-  console.log(context.query.name)
-
   const post = JSON.stringify(postsResponse);
   return {
     props:{

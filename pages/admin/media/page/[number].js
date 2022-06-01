@@ -1,18 +1,12 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
 import { useContext, useEffect } from 'react'
-
-import styles from '../../../../styles/Home.module.css'
-import excuteQuery from '../../../../lib/db'
-
 import { Context } from "../../../../context";
+import { selectMediaItems } from '../../../../lib/queries'
+import excuteQuery from '../../../../lib/db'
+import styles from '../../../../styles/Home.module.css'
 
 export default function AdminMediaPage(props) {
   
   const { state, dispatch } = useContext(Context);
-  
-    console.log()
 
     useEffect(() => {
         dispatch({type:"SET_MEDIA_ITEMS",payload:JSON.parse(props.mediaItems)})
@@ -20,6 +14,13 @@ export default function AdminMediaPage(props) {
 
     let mediaItemsDisplay;
     if (state.mediaItems){
+      /* 
+        TO DO
+        none of the pages should have data - render logic. 
+        mapping of media items should be handled by a dedicated AdminMediaItems component 
+        ( we will not display media items as a component to the users, they will be included in the post content)
+      */
+
         mediaItemsDisplay = state.mediaItems.map((mediaItem,index) => (
             <li key={index}>{mediaItem.meta_value}</li>
         ))
@@ -41,14 +42,9 @@ AdminMediaPage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const mediaResponse = await excuteQuery({
-      query: `SELECT *
-              FROM wp_postmeta 
-              WHERE meta_key="_wp_attached_file"
-              ORDER BY meta_id DESC
-              LIMIT 50
-              OFFSET ${(context.query.number - 1)  * 50}
-              `
+      query:selectMediaItems(50,context.query.number)
     });
+    console.log(mediaResponse)
     const mediaItems = JSON.stringify(mediaResponse);
     return {
       props:{

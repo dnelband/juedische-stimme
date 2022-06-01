@@ -54,7 +54,7 @@ export default async (req, res) => {
                             `
                 });
 
-                console.log(result,"result")
+                // console.log(result,"result")
                 res.json(result)
                 
         }

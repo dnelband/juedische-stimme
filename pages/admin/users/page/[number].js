@@ -7,13 +7,12 @@ import styles from '../../../../styles/Home.module.css'
 import excuteQuery from '../../../../lib/db'
 
 import { Context } from "../../../../context";
+import { selectUsers } from '../../../../lib/queries'
 
 export default function AdminUserPage(props) {
   
   const { state, dispatch } = useContext(Context);
   
-    console.log()
-
     useEffect(() => {
         dispatch({type:"SET_USERS",payload:JSON.parse(props.users)})
     },[])
@@ -39,14 +38,8 @@ export default function AdminUserPage(props) {
 AdminUserPage.layout = "admin"
 
 export const getServerSideProps = async (context) => {
-    
     const usersResponse = await excuteQuery({
-      query: `SELECT *
-              FROM wp_users 
-              ORDER BY ID DESC
-              LIMIT 10
-              OFFSET ${(context.query.number - 1)  * 10}
-              `
+      query:selectUsers(10,context.query.number)
     });
     const users = JSON.stringify(usersResponse);
     return {

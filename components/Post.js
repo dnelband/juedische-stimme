@@ -2,10 +2,25 @@ import React from 'react'
 
 function Post({ post }) {
 
+    let postDisplay;
+    if (post && post !== null){
+        postDisplay = (
+            <React.Fragment>
+                <h1>{post.post_title}</h1>
+                <div dangerouslySetInnerHTML={{__html:post.post_content}}></div>
+            </React.Fragment>
+        )
+    } else {
+        postDisplay = (
+            <div>
+                <h1>No Post Found!</h1>
+            </div>
+        )
+    }
+
     return (
         <div>
-            <h1>{post.post_title}</h1>
-            <div dangerouslySetInnerHTML={{__html:post.post_content}}></div>
+            {postDisplay}
         </div>
     )
 }

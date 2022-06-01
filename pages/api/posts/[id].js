@@ -55,7 +55,7 @@ export default async (req, res) => {
                         `
             });
 
-            console.log(result,"result on put / update")
+            // console.log(result,"result on put / update")
             res.json(result)
             
         }
@@ -67,7 +67,7 @@ export default async (req, res) => {
                         `
             });
 
-            console.log(result,"result")
+            // console.log(result,"result")
             res.json(result)
         }
         else {

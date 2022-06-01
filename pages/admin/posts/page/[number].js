@@ -36,13 +36,7 @@ AdminPostsPage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
-      query: `SELECT ID, post_title, post_name, post_status, comment_status, post_date, post_date, post_modified, post_type, post_author, post_parent
-              FROM wp_posts 
-              WHERE post_status='publish'
-              ORDER BY post_date DESC
-              LIMIT 50
-              OFFSET ${(context.query.number - 1)  * 50}
-              `
+      query: selectPosts(50,context.query.number,false)
     });
     const posts = JSON.stringify(postsResponse);
     return {

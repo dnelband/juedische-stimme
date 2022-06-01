@@ -27,7 +27,6 @@ export const getServerSideProps = async () => {
   const postsResponse = await excuteQuery({
     query: selectPosts(10,0,false,"post")
   });
-  console.log(postsResponse)
   const posts = JSON.stringify(postsResponse);
   return {
     props:{

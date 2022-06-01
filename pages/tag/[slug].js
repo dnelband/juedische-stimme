@@ -13,8 +13,6 @@ export default function PostsPage(props) {
     // example how to use state && dispatch in app
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
   },[])
-  console.log(state.posts, " POSTS ON TAG ")
-
   return (
     <div className={styles.container}>
         {state.posts ? <Posts posts={state.posts}/> : ""}

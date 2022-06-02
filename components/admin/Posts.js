@@ -25,7 +25,7 @@ function Posts(props) {
         postsDisplay = props.posts.map((post,index)=>(
             <div key={index}>
                 <h3><a href={"/admin/posts/" + post.post_name}>{post.post_title}</a></h3>
-                <span>AUTHOR: {post.post_author}</span>
+                <span>AUTHOR: {post.username}</span>
                 <span>DATE PUBLISHED:{new Date(post.post_date).toLocaleString('de')}</span>
                 <button onClick={() => deletePost(post)}>
                     DELETE POST

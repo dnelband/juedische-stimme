@@ -19,7 +19,7 @@ function Nav() {
     <nav>
         <ul>
             <li>
-                <a href={"/"}>Home</a>
+                <Link href={"/"}>Home</Link>
             </li>
             {navItems.map((item,index)=>(
                 <li key={index}>

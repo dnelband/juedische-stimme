@@ -22,6 +22,7 @@ export default function AdminPostsPage(props) {
   if (state.posts){
     postsDisplay = <AdminPosts posts={state.posts}/>
   }
+  
   return (
     <div className={styles.container}>
         <h2>Posts</h2>
@@ -36,12 +37,12 @@ AdminPostsPage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
-      query: selectPosts(50,context.query.number,false)
+      query: selectPosts(50,context.query.number,false,'post', ['post_title','post_name','post_date'] )
     });
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
-        posts:posts,
+        posts,
         pageNum:context.query.number
       }
     }

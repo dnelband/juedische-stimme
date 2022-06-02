@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function Post({ post }) {
+
+    useEffect(() => {
+        console.log(post)
+        return () => {
+            // second
+        }
+    }, [])
+    
 
     let postDisplay;
     if (post && post !== null){
         postDisplay = (
             <React.Fragment>
                 <h1>{post.post_title}</h1>
+                <p>
+                    {post.tags && post.tags.length > 0 
+                        ?
+                        post.tags.map((tag,index) => (<a href={"/tag/"+tag.slug}>{' <' + tag.name + '> '}</a>))
+                        :
+                        ""
+                    }
+                </p>
                 <div dangerouslySetInnerHTML={{__html:post.post_content}}></div>
             </React.Fragment>
         )

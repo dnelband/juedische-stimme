@@ -22,7 +22,7 @@ export default function AdminMediaPage(props) {
       */
 
         mediaItemsDisplay = state.mediaItems.map((mediaItem,index) => (
-            <li key={index}>{mediaItem.meta_value}</li>
+            <li key={index}><img width={'100px'} src={`/wp-content/uploads/${mediaItem.meta_value}`}/></li>
         ))
     }
 

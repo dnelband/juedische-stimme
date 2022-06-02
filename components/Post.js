@@ -18,7 +18,7 @@ function Post({ post }) {
                 <p>
                     {post.tags && post.tags.length > 0 
                         ?
-                        post.tags.map((tag,index) => (<a href={"/tag/"+tag.slug}>{' <' + tag.name + '> '}</a>))
+                        post.tags.map((tag,index) => (<a key={index} href={"/tag/"+tag.slug}>{' <' + tag.name + '> '}</a>))
                         :
                         ""
                     }

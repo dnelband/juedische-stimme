@@ -12,6 +12,13 @@ export default function Home(props) {
   const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    console.log(month)
+
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
   },[])
   return (

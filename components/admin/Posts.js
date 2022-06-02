@@ -5,11 +5,11 @@ function Posts(props) {
 
     function deletePost(post){
 
-        console.log(post['ID'],"post")
+        console.log(post.postId,"post")
 
         axios({
             method: 'delete',
-            url: `/api/posts/${post['ID']}`
+            url: `/api/posts/${post.postId}`
         }).then((response) => {
             window.location.reload()
             console.log(response,"response on delete post");

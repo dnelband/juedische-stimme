@@ -3,9 +3,10 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import dateTimeHelper from '../../helpers/dateTimeHelper';
 import styles from '../../styles/Form.module.css';
+import Tiptap from './TipTap';
 
 const PostForm = ({post}) => {
-
+  
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -38,9 +39,11 @@ const PostForm = ({post}) => {
 
         // alert(JSON.stringify(values, null, 2));
 
+        console.log(values.post_content)
+
         axios({
             method: post ? 'put' : 'post',
-            url: `/api/posts${post ? "/" + post['ID'] : ''}`,
+            url: `/api/posts${post ? "/" + post.postId : ''}`,
             data: {
                 ...values,
                 post_date:post ? post.post_date : dateTimeHelper(new Date()),
@@ -50,8 +53,7 @@ const PostForm = ({post}) => {
             }
         }).then((response) => {
             console.log(response,"response on post");
-            // window.location.href = "/admin/posts/page/1"
-            console.log('NOW NEEDS TO GO TO POSTS LIST!')
+            window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
         }, (error) => {
             console.log(error, "ERROR on post");
             console.log('NOW NEEDS TO DISPLAY ERRORS!')
@@ -75,12 +77,19 @@ const PostForm = ({post}) => {
         </div>
         <div className={styles['form-row']}>
           <label htmlFor='post_content'>Post Content</label>
-          <textarea 
+          {/* <textarea 
                 id="post_content"
                 name="post_content"
                 type="post_content"
                 onChange={formik.handleChange}
                 value={formik.values.post_content}
+          /> */}
+          <Tiptap 
+              id="post_content"
+              name="post_content"
+              type="post_content"
+              onChange={val => formik.setFieldValue('post_content',val,true)}
+              value={formik.values.post_content}
           />
         </div>
         <div className={styles['form-row']}>

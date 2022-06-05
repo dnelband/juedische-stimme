@@ -62,9 +62,7 @@ export default async (req, res) => {
         else if (req.method === 'DELETE'){
             
             const result = await excuteQuery({
-                query: `DELETE FROM wp_posts
-                        WHERE ID='${req.query.id}';
-                        `
+                query: `DELETE FROM wp_posts WHERE ID='${req.query.id}';`
             });
 
             // console.log(result,"result")

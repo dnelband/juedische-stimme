@@ -2,14 +2,6 @@ import React, { useEffect } from 'react'
 
 function Post({ post }) {
 
-    useEffect(() => {
-        console.log(post)
-        return () => {
-            // second
-        }
-    }, [])
-    
-
     let postDisplay;
     if (post && post !== null){
         postDisplay = (

@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react'
-import { Context } from "../../context";
-import excuteQuery from '../../lib/db'
-import { selectPosts, selectPostsByTag } from '../../lib/queries'
-import Posts from '../../components/Posts'
-import styles from '../../styles/Home.module.css'
+import { Context } from "context";
+import excuteQuery from 'lib/db'
+import { selectPostsByTag } from 'lib/queries'
+import Posts from 'components/Posts'
+import styles from 'styles/Home.module.css'
 
 export default function PostsPage(props) {
   

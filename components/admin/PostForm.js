@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import dateTimeHelper from '../../helpers/dateTimeHelper';
 import styles from '../../styles/Form.module.css';
-import Tiptap from './TipTap';
+import TiptapEditor from '../tiptap/TipTapEditor';
 
-const PostForm = ({post}) => {
+const PostForm = ({post,nextPostId}) => {
   
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
@@ -77,19 +77,13 @@ const PostForm = ({post}) => {
         </div>
         <div className={styles['form-row']}>
           <label htmlFor='post_content'>Post Content</label>
-          {/* <textarea 
-                id="post_content"
-                name="post_content"
-                type="post_content"
-                onChange={formik.handleChange}
-                value={formik.values.post_content}
-          /> */}
-          <Tiptap 
+          <TiptapEditor 
               id="post_content"
               name="post_content"
               type="post_content"
               onChange={val => formik.setFieldValue('post_content',val,true)}
               value={formik.values.post_content}
+              postId={post ? post.postId : nextPostId}   
           />
         </div>
         <div className={styles['form-row']}>

@@ -1,18 +1,18 @@
- // import { useContext, useEffect } from 'react'
+ import { useContext, useEffect } from 'react'
 import styles from '../../../styles/Home.module.css'
 import excuteQuery from '../../../lib/db'
-// import { Context } from "../../../context"
+import { Context } from "../../../context"
 import PostForm from '../../../components/admin/PostForm'
 import { selectPostByName } from '../../../lib/queries'
 
 export default function EditPostPage(props) {
-  // const { state, dispatch } = useContext(Context);
-  const post = JSON.parse(props.post)[0];
+  const { state, dispatch } = useContext(Context);
+  useEffect(() => {
+    dispatch({type:'SET_POST',payload:JSON.parse(props.post)[0]})
+  },[])
   return (
     <div className={styles.container}>
-      <PostForm
-        post={post}
-      />
+      {state.post ? <PostForm post={state.post} /> : ''}
     </div>
   )
 }

@@ -1,11 +1,11 @@
 //  import { useContext, useEffect } from 'react'
 
-import styles from '../../styles/Home.module.css'
-import excuteQuery from '../../lib/db'
+import styles from 'styles/Home.module.css'
+import excuteQuery from 'lib/db'
 
-// import { Context } from "../../context"
-import Post from '../../components/Post'
-import { selectPostByName, selectTagsByIds } from '../../lib/queries'
+//  import { Context } from "../../context"
+import Post from 'components/Post'
+import { selectPostByName, selectTagsByIds } from 'lib/queries'
 
 export default function ContentPage(props) {
   

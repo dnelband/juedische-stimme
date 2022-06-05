@@ -1,7 +1,7 @@
-import '../styles/globals.css'
-import { Provider } from "../context";
-import Layout from '../components/Layout';
-import AdminLayout from '../components/admin/Layout';
+import 'styles/globals.css'
+import { Provider } from "context";
+import Layout from 'components/Layout';
+import AdminLayout from 'components/admin/Layout';
 
 const layouts = {
   "main":Layout,

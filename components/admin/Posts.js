@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-function Posts(props) {
+function Posts({posts}) {
 
     function deletePost(post){
 
@@ -21,8 +21,8 @@ function Posts(props) {
     }
 
     let postsDisplay;
-    if (props.posts){
-        postsDisplay = props.posts.map((post,index)=>(
+    if (posts){
+        postsDisplay = posts.map((post,index)=>(
             <div key={index}>
                 <h3><a href={"/admin/posts/" + post.post_name}>{post.post_title}</a></h3>
                 <span>AUTHOR: {post.username}</span>
@@ -34,11 +34,11 @@ function Posts(props) {
         ))
     }
 
-  return (
-    <div>
-        {postsDisplay}
-    </div>
-  )
+    return (
+        <div>
+            {postsDisplay}
+        </div>
+    )
 }
 
 export default Posts

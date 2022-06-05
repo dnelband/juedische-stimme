@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react'
-import { Context } from '../context';
+import { Context } from 'context';
 
-import excuteQuery from '../lib/db'
-import { selectPosts } from '../lib/queries';
+import excuteQuery from 'lib/db'
+import { selectPosts } from 'lib/queries';
 
-import Posts from '../components/Posts'
-import styles from '../styles/Home.module.css'
+import Posts from 'components/Posts'
+import styles from 'styles/Home.module.css'
 
 export default function Home(props) {
   

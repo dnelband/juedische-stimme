@@ -1,11 +1,12 @@
 import React from 'react'
 import axios from 'axios'
+import Image from 'next/image'
 
 const MediaItems = ({mediaItems}) => {
 
     function deleteMediaItem(mediaItem){
 
-        const deleteFileUrl = `${window.location.protocol}//${window.location.hostname}:4000/media/${mediaItem.meta_value.split('/').join('+++')}`;
+        const deleteFileUrl = `http://${window.location.hostname}:4000/media/${mediaItem.meta_value.split('/').join('+++')}`;
         const deleteFileRequest = axios.delete(deleteFileUrl)
         const deleteMediaItemUrl = `/api/media/${mediaItem.meta_id}`
         const deleteMediaItemRequest = axios.delete(deleteMediaItemUrl)
@@ -13,43 +14,22 @@ const MediaItems = ({mediaItems}) => {
         axios.all([deleteFileRequest, deleteMediaItemRequest]).then(axios.spread((...responses) => {
             const deleteFileResponse = responses[0]
             const deleteMediaItemResponse = responses[1]
-            console.log(deleteFileResponse)
-            console.log(deleteMediaItemResponse)
+            // console.log(deleteFileResponse)
+            // console.log(deleteMediaItemResponse)
             window.location.reload()
             // use/access the results 
-          })).catch(errors => {
-              console.log(errors, " ERRORS")
+        })).catch(errors => {
+            console.log(errors, " ERRORS")
             // react on errors.
-          })
-
-        axios({
-            method: 'delete',
-            url:deleteFileUrl
-        }).then((response) => {
-            // window.location.reload()
-            console.log(response,"response on delete FILE");
-        }, (error) => {
-            console.log(error.response, "ERROR on delete FILE");
-        });
-
-        // axios({
-        //     method: 'delete',
-        //     url: `/api/media/${mediaItem.meta_id}`
-        // }).then((response) => {
-        //     // window.location.reload()
-        //     console.log(response,"response on delete media item");
-        //     console.log('NOW NEEDS TO REFRESH media items LIST!');
-        // }, (error) => {
-        //     console.log(error, "ERROR on delete media item");
-        //     console.log('NOW NEEDS TO DISPLAY ERROR')
-        // });
+        })
     }
 
     let mediaItemsDisplay;
     if (mediaItems){
         mediaItemsDisplay = mediaItems.map((mediaItem,index) => (
+            // TO DO - NEED TO HAVE A DIFFERENT DISPLAY FOR VIDEOS!!!!!!!!!!!(!!!)
             <li key={index}>
-                <img width={'100px'} src={`/wp-content/uploads/${mediaItem.meta_value}`}/>
+                <Image width={'100px'} height={'100px'} src={`/wp-content/uploads/${mediaItem.meta_value}`}/>
                 <button onClick={() => deleteMediaItem(mediaItem)}>
                     DELETE MEDIA ITEM
                 </button>

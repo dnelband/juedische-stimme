@@ -30,15 +30,16 @@ const MenuBar = ({ editor, postId }) => {
     };
   
     const uploadImage = async (formData,fileName) => {
+
+      // UPLOAD THE FILE
         const config = {
-        headers: { 'content-type': 'multipart/form-data' },
-        onUploadProgress: (event) => {
-            console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-        },
+          headers: { 'content-type': 'multipart/form-data' },
+          onUploadProgress: (event) => {
+              console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+          },
         };
+
         const response = await axios.post('/api/uploads', formData, config);
-        
-        console.log('response:', response.data);
 
         const today = new Date();
         let month = today.getMonth();
@@ -46,7 +47,8 @@ const MenuBar = ({ editor, postId }) => {
         month = month < 10 ? "0" + month : month;
 
         const meta_value = `${today.getFullYear()}/${month}/${fileName}`;
-
+        
+      // CREATE THE DB RECORD FOR wp_postmeta
         axios({
             method:'post',
             url: `/api/media`,
@@ -60,7 +62,6 @@ const MenuBar = ({ editor, postId }) => {
             insertImage(`/wp-content/uploads/${meta_value}`)
         }, (error) => {
             console.log(error, "ERROR on insert media item");
-            console.log('NOW NEEDS TO DISPLAY ERRORS!')
         });
     };
 

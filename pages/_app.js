@@ -9,9 +9,7 @@ const layouts = {
 }
 
 function MyApp({ Component, pageProps }) {
-
     const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
-
     return (
       <Provider>
         <Layout>

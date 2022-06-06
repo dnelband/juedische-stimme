@@ -33,3 +33,6 @@ yarn-error.log*
 
 # uploads
 /public/wp-content/
+
+# CA
+/CA

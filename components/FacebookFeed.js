@@ -1,47 +1,56 @@
+import React, {useEffect, useState, useContext } from 'react'
+import { Context } from 'context';
 
-import React, {useEffect, useState} from 'react'
 import dateTimeHelper from 'helpers/dateTimeHelper'
 import axios from 'axios'
+import renderToString from 'helpers/renderToString'
 
 const FacebookFeed = (props) => {
+
+    const { state, dispatch } = useContext(Context)
 
     const [ feed, setFeed ] = useState()
     
     useEffect(() => {
-        initFacebookFeed()
-    }, [])
+            if (state.facebook.token){
+                initFacebookFeed()
+            }
+    }, [state.facebook])
     
     async function initFacebookFeed(){
-        if (!props.fbFeed){
+        if (!state.facebook.feed){
             fetchFacebookFeed()
         } else {
-            const fbFeedUpdatedMonth = parseInt(props.fbFeed.date_updated.split('-')[1]);
-            const fbFeedUpdatedDay = parseInt(props.fbFeed.date_updated.split('-')[2])
+            setFeed(JSON.parse(state.facebook.feed.content))
+            
+            const fbFeedUpdatedMonth = parseInt(state.facebook.feed.date_updated.split('-')[1]);
+            const fbFeedUpdatedDay = parseInt(state.facebook.feed.date_updated.split('-')[2])
             const today = new Date();
             const month = today.getMonth() + 1;
             const day = today.getDate();
-            console.log(month,day)
             if (day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth) fetchFacebookFeed()
-            else setFeed(JSON.parse(props.fbFeed.content))            
         }
     }
 
     async function fetchFacebookFeed(){
+        console.log(state.facebook)
         console.log('FETCHING FACEBOOK FEED')
-        const res  = await fetch('https://graph.facebook.com/1297004353776035/feed?access_token=EAAHrdtxIrIsBAAGN4txgdsfvF4Dj1GZAU0ZB24dFDnRIpQ0ZB3fVRQYeVYix7HnfZBaGkHPXhZAKYrYG28MpVbSirNllWATPRZA0byH3Xpqv0N2o3BZBSwhBzOoeK3zOmZCBgVpei2satOYlTOgrflxOZBy2ZC65RLDc5CusR5SHkc8FMxHoY7RAl2hUwuZBQqkNVh0PwPGacev7T9omokdBWgd')
-        const feed = await res.json()
+        const res  = await fetch(`https://graph.facebook.com/1297004353776035/feed?limit=3&fields=full_picture,story,message&access_token=${state.facebook.token}`)
+        const fetchedFeed = await res.json()
         // remove all the weird characters from the content to avoid mySql errors
-        const renderedFeed = JSON.stringify(feed.data).split('’').join('').split('\\n').join('').split("'").join('')
-        if (feed.data && feed.data.length > 0){
+        if (fetchedFeed.data && fetchedFeed.data.length > 0){
+            const renderedFeed = renderToString(fetchedFeed.data);
+            console.log(renderedFeed)
             axios({
                 method: 'post',
                 url: `/api/fbfeed`,
                 data: {
                     content:renderedFeed,
-                    date_updated:dateTimeHelper(new Date())
+                    date_updated:dateTimeHelper(new Date()),
+                    type:'posts'
                 }
             }).then((response) => {
-                setFeed(feed.data)
+                setFeed(fetchedFeed.data)
                 console.log(response,"response on create fb feed record");
                 // window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
             }, (error) => {
@@ -58,12 +67,15 @@ const FacebookFeed = (props) => {
                 return (
                     <div style={{width: "33%", float: "left",padding:"5px"}}>
                         <h2>{fbPost.story}</h2>
+                        <img src={fbPost.full_picture} width={"100%"}/>
                         <p>{fbPost.message}</p>
                     </div>
                 )
             }
         })
     }
+
+    console.log(feed, " FEED ")
 
     return (
         <div style={{overflow:"auto", backgroundColor: "#efefef"}}>

@@ -13,6 +13,9 @@ export default function PostsPage(props) {
     // example how to use state && dispatch in app
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
   },[])
+
+  // console.log(state.posts)
+
   return (
     <div className={styles.container}>
         {state.posts ? <Posts posts={state.posts}/> : ""}
@@ -29,13 +32,14 @@ PostsPage.layout = "main"
 
 export const getServerSideProps = async (context) => {
     const postsResponse = await excuteQuery({
-      query: selectPostsByTag(context.query.slug)
+      query: selectPostsByTag(context.query.slug,10,context.query.number)
     });
     const posts = JSON.stringify(postsResponse);
     return {
       props:{
         posts:posts,
-        slug:context.query.slug
+        slug:context.query.slug,
+        pageNum:context.query.number
       }
     }
   }

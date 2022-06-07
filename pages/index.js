@@ -26,9 +26,18 @@ export default function Home(props) {
         <h1> LATEST POSTS:</h1>
         {state.posts ? <Posts posts={state.posts}/> : ""}
         <hr/>
+        <FacebookEvents/>
+        <hr/>
+        <h1>BUTTONS AND CALL TO ACTION</h1>
+        <blockquote>BUTTONS AND CALL TO ACTION</blockquote>
+        <hr/>
+        <h1>SUGN UP TO NEWSLETTER</h1>
+        <hr/>
         <FacebookFeed /> 
         <hr/>
-        <FacebookEvents/>
+        <h1>
+          GALLERY OR WHATEBER
+        </h1>
     </div>
   )
 }

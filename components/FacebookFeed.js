@@ -13,6 +13,7 @@ const FacebookFeed = (props) => {
     
     useEffect(() => {
             if (state.facebook.token){
+                console.log(state.facebook, " STATE:FACEBOOK FROM ANOTHER COMPONENT")
                 initFacebookFeed()
             }
     }, [state.facebook])

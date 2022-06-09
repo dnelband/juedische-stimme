@@ -13,7 +13,7 @@ const TipTapEditor = ({value, onChange, itemId, itemType, showMenu, height}) => 
         ],
         content: value,
         onUpdate:({editor}) => {
-            const rawHtml = editor.getHTML()
+            let rawHtml = editor.getHTML()
             onChange(rawHtml)
         }
     })

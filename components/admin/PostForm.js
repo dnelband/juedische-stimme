@@ -4,9 +4,12 @@ import axios from 'axios';
 import dateTimeHelper from 'helpers/dateTimeHelper';
 import styles from 'styles/Form.module.css';
 import TiptapEditor from '../tiptap/TipTapEditor';
+import TagForm from './TagForm';
 
 const PostForm = ({post,nextPostId}) => {
   
+  console.log(post)
+
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -14,7 +17,7 @@ const PostForm = ({post,nextPostId}) => {
         post_author: post ? post.post_author : 2, // '' --> CHANGE THIS BACK!!!!,
         post_date: post ? post.post_date : '',
         post_date_gmt:post ? post.post_date_gmt : '',
-        post_content:post ? post.post_content : '',
+        post_content:post ? post.post_content.replace(/(?:\r\n|\r|\n)/g, '<br>') : '',
         post_title:post ? post.post_title : '',
         post_excerpt: post ? post.post_excerpt : '',
         post_status: post ? post.post_status : '',
@@ -41,6 +44,8 @@ const PostForm = ({post,nextPostId}) => {
 
         console.log(values.post_content)
 
+        console.log( dateTimeHelper(new Date()))
+
         axios({
             method: post ? 'put' : 'post',
             url: `/api/posts${post ? "/" + post.postId : ''}`,
@@ -49,11 +54,12 @@ const PostForm = ({post,nextPostId}) => {
                 post_date:post ? post.post_date : dateTimeHelper(new Date()),
                 // post_date_gmt: like post_date but one hour less
                 post_name:values.post_title.replace(/\s+/g, '-').toLowerCase().replace(),
-                post_modified_date: dateTimeHelper(new Date())
+                post_modified: dateTimeHelper(new Date())
             }
         }).then((response) => {
             console.log(response,"response on post");
-            window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
+            if (!post) window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
+            else window.location.reload()
         }, (error) => {
             console.log(error, "ERROR on post");
             console.log('NOW NEEDS TO DISPLAY ERRORS!')
@@ -84,8 +90,13 @@ const PostForm = ({post,nextPostId}) => {
               onChange={val => formik.setFieldValue('post_content',val,true)}
               value={formik.values.post_content}
               itemType={'post'}
-              itemI={post ? post.postId : nextPostId}   
+              itemId={post ? post.postId : nextPostId}   
           />
+        </div>
+        <div className={styles['form-row']}>
+          <TagForm 
+            postId={post ? post.postId : nextPostId}
+          />          
         </div>
         <div className={styles['form-row']}>
           <button type="submit">Submit</button>

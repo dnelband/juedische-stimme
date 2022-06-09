@@ -1,10 +1,10 @@
 import excuteQuery from 'lib/db'
-import { selectNavItems } from 'lib/queries';
+import { selectTagsBySearchPhrase } from 'lib/queries';
 
 export default async (req, res) => {
     try {
         const result = await excuteQuery({
-            query: selectNavItems()
+            query: selectTagsBySearchPhrase(req.query.phrase)
         });
         res.json(result)
     } catch ( error ) {

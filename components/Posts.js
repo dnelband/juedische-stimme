@@ -29,11 +29,11 @@ function Posts(props) {
             }
           }
           else content = content.substring(startIndex,endIndex)
-
+          
           return (
             <article key={index}>
               <h2><a href={'/' + post.post_name}>{post.post_title}</a></h2>
-              <h2>CATEGORY ID: {post.categoryId}</h2>
+              <h4><a href={`/category/${post.categoryName}`}>{post.categoryName}</a></h4>
               <div dangerouslySetInnerHTML={{__html:content}}></div>
             </article>
           )

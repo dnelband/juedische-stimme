@@ -5,17 +5,41 @@ const nextConfig = {
     return [
       {
         source: '/:year(\\d{1,})/:month/:day/:name',
-        destination: '/:name', // Matched parameters can be used in the destination
+        destination: '/:name',
         permanent: true,
       },{
         source: '/tag/:slug',
-        destination: '/tag/:slug/page/1', // Matched parameters can be used in the destination
+        destination: '/tag/:slug/page/1',
         permanent: false,
       },{
         source: '/search/:phrase',
-        destination: '/search/:phrase/page/1', // Matched parameters can be used in the destination
+        destination: '/search/:phrase/page/1',
         permanent: false,
-      },
+      },{
+        source: '/admin/posts',
+        destination: '/admin/posts/page/1',
+        permanent: false,
+      },{
+        source: '/admin/comments',
+        destination: '/admin/comments/page/1',
+        permanent: false,
+      },{
+        source: '/admin/media',
+        destination: '/admin/media/page/1',
+        permanent: false,
+      },{
+        source: '/admin/pages',
+        destination: '/admin/pages/page/1',
+        permanent: false,
+      },{
+        source: '/admin/users',
+        destination: '/admin/users/page/1',
+        permanent: false,
+      },{
+        source: '/admin/galleries',
+        destination: '/admin/galleries/page/1',
+        permanent: false,
+      }
     ]
   },
 }

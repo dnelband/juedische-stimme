@@ -37,7 +37,12 @@ AdminPostsPage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
-      query: selectPosts(50,context.query.number,false,'post', ['post_title','post_name','post_date'] )
+      query: selectPosts({
+        numberOfPosts:50,
+        pageNum:context.query.number,
+        showUnpublished:true,
+        postType:'post', 
+        fieldsList:['post_title','post_name','post_date']})
     });
     const posts = JSON.stringify(postsResponse);
     return {

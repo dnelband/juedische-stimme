@@ -1,9 +1,9 @@
  import { useContext, useEffect } from 'react'
-import styles from '../../../styles/Home.module.css'
-import excuteQuery from '../../../lib/db'
-import { Context } from "../../../context"
-import PostForm from '../../../components/admin/PostForm'
-import { selectPostByName } from '../../../lib/queries'
+import styles from 'styles/Home.module.css'
+import excuteQuery from 'lib/db'
+import { Context } from "context"
+import PostForm from 'components/admin/PostForm'
+import { selectPostByName } from 'lib/queries'
 
 export default function EditPostPage(props) {
   const { state, dispatch } = useContext(Context);

@@ -60,7 +60,7 @@ const FacebookEvents = (props) => {
         eventsDisplay = events.map((fbEvent, index) => {
             if (index <= 2){
                 return (
-                    <div style={{width: "33%", float: "left",padding:"5px"}}>
+                    <div key={index} style={{width: "33%", float: "left",padding:"5px"}}>
                         <p>{fbEvent.description}</p>
                     </div>
                 )

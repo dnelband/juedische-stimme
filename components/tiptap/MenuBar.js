@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
-import styles from '../../styles/tiptap.module.css'
+import styles from 'styles/tiptap.module.css'
 import axios from 'axios'
 
-const MenuBar = ({ editor, postId }) => {
+const MenuBar = ({ editor, itemId, itemType }) => {
 
     const fileInputRef = useRef();
 
@@ -53,7 +53,7 @@ const MenuBar = ({ editor, postId }) => {
             method:'post',
             url: `/api/media`,
             data: {
-                post_id:postId,
+                post_id:itemId,
                 meta_key:'_wp_attached_file',
                 meta_value
             }
@@ -72,18 +72,18 @@ const MenuBar = ({ editor, postId }) => {
     }
 
     let imageButtonDisplay;
-    if (uploadImage){
+    if (itemType === "post"){
         imageButtonDisplay = (
             <a onClick={onUpladImageClick}>
                 image
                 <input
-                accept={'.*'}
-                multiple={false}
-                name={"theFiles"}
-                onChange={onImageInputChangeHanlder}
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                type="file"
+                  accept={'.*'}
+                  multiple={false}
+                  name={"theFiles"}
+                  onChange={onImageInputChangeHanlder}
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  type="file"
                 />
             </a>
         )

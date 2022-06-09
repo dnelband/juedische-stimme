@@ -1,4 +1,4 @@
-import { deletePost, updatePost } from 'lib/queries';
+import { updateGallery, deleteGallery } from 'lib/queries';
 import excuteQuery from 'lib/db'
 
 export default async (req, res) => {
@@ -6,7 +6,7 @@ export default async (req, res) => {
         if (req.method === 'PUT') {
 
             const result = await excuteQuery({
-                query: updatePost(req.body,req.query.id)
+                query: updateGallery(req.body,req.query.id)
             });
 
             // console.log(result,"result on put / update")
@@ -16,7 +16,7 @@ export default async (req, res) => {
         else if (req.method === 'DELETE'){
             
             const result = await excuteQuery({
-                query: deletePost(req.query.id)
+                query: deleteGallery(req.query.id)
             });
 
             // console.log(result,"result")

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import dateTimeHelper from '../../helpers/dateTimeHelper';
-import styles from '../../styles/Form.module.css';
+import dateTimeHelper from 'helpers/dateTimeHelper';
+import styles from 'styles/Form.module.css';
 import TiptapEditor from '../tiptap/TipTapEditor';
 
 const PostForm = ({post,nextPostId}) => {
@@ -83,7 +83,8 @@ const PostForm = ({post,nextPostId}) => {
               type="post_content"
               onChange={val => formik.setFieldValue('post_content',val,true)}
               value={formik.values.post_content}
-              postId={post ? post.postId : nextPostId}   
+              itemType={'post'}
+              itemI={post ? post.postId : nextPostId}   
           />
         </div>
         <div className={styles['form-row']}>

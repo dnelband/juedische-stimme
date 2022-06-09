@@ -13,7 +13,6 @@ const FacebookFeed = (props) => {
     
     useEffect(() => {
             if (state.facebook.token){
-                console.log(state.facebook, " STATE:FACEBOOK FROM ANOTHER COMPONENT")
                 initFacebookFeed()
             }
     }, [state.facebook])
@@ -34,8 +33,7 @@ const FacebookFeed = (props) => {
     }
 
     async function fetchFacebookFeed(){
-        console.log(state.facebook)
-        console.log('FETCHING FACEBOOK FEED')
+        
         const res  = await fetch(`https://graph.facebook.com/1297004353776035/feed?limit=3&fields=full_picture,story,message&access_token=${state.facebook.token}`)
         const fetchedFeed = await res.json()
         // remove all the weird characters from the content to avoid mySql errors
@@ -66,7 +64,7 @@ const FacebookFeed = (props) => {
         feedDisplay = feed.map((fbPost, index) => {
             if (index <= 2){
                 return (
-                    <div style={{width: "33%", float: "left",padding:"5px"}}>
+                    <div key={index} style={{width: "33%", float: "left",padding:"5px"}}>
                         <h2>{fbPost.story}</h2>
                         <img src={fbPost.full_picture} width={"100%"}/>
                         <p>{fbPost.message}</p>
@@ -75,8 +73,6 @@ const FacebookFeed = (props) => {
             }
         })
     }
-
-    console.log(feed, " FEED ")
 
     return (
         <div style={{overflow:"auto", backgroundColor: "#efefef"}}>

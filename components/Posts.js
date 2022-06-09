@@ -28,11 +28,12 @@ function Posts(props) {
               content = "..." + content.toLowerCase().split(props.phrase).join(`<b>${props.phrase}</b>`) + "..."
             }
           }
-          content = content.substring(startIndex,endIndex)
+          else content = content.substring(startIndex,endIndex)
 
           return (
             <article key={index}>
               <h2><a href={'/' + post.post_name}>{post.post_title}</a></h2>
+              <h2>CATEGORY ID: {post.categoryId}</h2>
               <div dangerouslySetInnerHTML={{__html:content}}></div>
             </article>
           )

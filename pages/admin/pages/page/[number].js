@@ -1,14 +1,11 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
-import { useContext, useEffect } from 'react'
+ import { useContext, useEffect } from 'react'
 
-import styles from '../../../../styles/Home.module.css'
-import excuteQuery from '../../../../lib/db'
+import styles from 'styles/Home.module.css'
+import excuteQuery from 'lib/db'
 
-import { Context } from "../../../../context";
-import AdminPosts from '../../../../components/admin/Posts'
-import { selectPosts } from '../../../../lib/queries'
+import { Context } from "context";
+import AdminPosts from 'components/admin/Posts'
+import { selectPosts } from 'lib/queries'
 
 export default function AdminPagePage(props) {
   
@@ -37,7 +34,11 @@ AdminPagePage.layout = "admin"
 export const getServerSideProps = async (context) => {
     
     const postsResponse = await excuteQuery({
-      query:selectPosts(50,context.query.number,true,'page')
+      query:selectPosts({
+        numberOfPosts:50,
+        pageNum:context.query.number,
+        showUnpublished:true,
+        postType:'page'})
     });
     const posts = JSON.stringify(postsResponse);
     return {

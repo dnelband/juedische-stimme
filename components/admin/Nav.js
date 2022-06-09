@@ -6,12 +6,12 @@ function AdminNav() {
     <div>
       <ul>
         <li><Link href='/admin'>Dashboard</Link></li>
-        <li><Link href='/admin/posts/page/1'>Posts</Link></li>
-        <li><Link href='/admin/media/page/1'>Media</Link></li>
-        <li><Link href='/admin/pages/page/1'>Pages</Link></li>
-        <li><Link href='/admin/comments/page/1'>Comments</Link></li>
-        <li><Link href='/admin/appearance'>Appearance</Link></li>
-        <li><Link href='/admin/users/page/1'>Users</Link></li>
+        <li><Link href='/admin/posts'>Posts</Link></li>
+        <li><Link href='/admin/galleries'>Galleries</Link></li>
+        <li><Link href='/admin/media'>Media</Link></li>
+        <li><Link href='/admin/pages'>Pages</Link></li>
+        <li><Link href='/admin/comments'>Comments</Link></li>
+        <li><Link href='/admin/users'>Users</Link></li>
       </ul>
     </div>
   )

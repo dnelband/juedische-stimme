@@ -8,7 +8,7 @@ const SearchFilter = ({categoryName, categories}) => {
     if (categories){
         categoryOptionsDisplay = (
             categories.map((cat,index)=>(
-                <option value={cat.name} selected={cat.name === categoryName ? true : false}>{cat.name}</option>
+                <option key={index} value={cat.name} selected={cat.name === categoryName ? true : false}>{cat.name}</option>
             ))
         )
     }

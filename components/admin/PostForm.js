@@ -65,7 +65,7 @@ const PostForm = ({post,nextPostId,categories}) => {
   let selectCategoriesDisplay;
   if (categories){
     selectCategoriesDisplay = categories.map((category,index)=>(
-      <option value={category.term_id}>{category.name}</option>
+      <option key={index} value={category.term_id}>{category.name}</option>
     ))
   }
 

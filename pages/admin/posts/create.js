@@ -13,7 +13,7 @@ export default function CreatePostPage(props) {
     dispatch({type:'SET_CATEGORIES',payload:JSON.parse(props.categories)})
   },[])
 
-  const nextPostId = JSON.parse(props.maxId)[0]['MAX( ID )'] + 1
+  let nextPostId = JSON.parse(props.nextPostId).length > 0 ? JSON.parse(props.nextPostId)[0].max_id : ''
   
   return (
     <div className={styles.container}>
@@ -29,18 +29,18 @@ export default function CreatePostPage(props) {
 CreatePostPage.layout = "admin";
 
 export const getServerSideProps = async (context) => {
-  const maxIdResponse = await excuteQuery({
-    query: ` SELECT MAX( ID ) FROM wp_posts;`
+  const nextPostIdResponse = await excuteQuery({
+    query: ` SELECT max_id FROM js_maxids WHERE js_maxids.table='posts'`
   });
-  const maxId = JSON.stringify(maxIdResponse);
-  console.log(maxId)
+  const nextPostId = JSON.stringify(nextPostIdResponse);
+
   const categoriesResponse = await excuteQuery({
     query: selectCategories(50,context.query.number)
   });
   const categories = JSON.stringify(categoriesResponse);
   return {
     props:{
-      maxId,
+      nextPostId,
       categories
     }
   }

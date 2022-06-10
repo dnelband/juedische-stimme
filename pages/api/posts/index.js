@@ -21,6 +21,18 @@ export default async (req, res) => {
                 query:incrementTermTaxonomyCount(req.body.categoryId)
             })
             console.log(incrementCategoryCountResult," incrementCategoryCountResult")
+
+            if (req.body.nextPostId){
+                const incrementMaxIdRecordResult = await excuteQuery({
+                    query:`UPDATE js_maxids SET max_id='${result.insertId + 1}' WHERE js_maxids.table='posts'`
+                })
+                console.log(incrementMaxIdRecordResult, 'incrementMaxIdRecordResult')   
+            } else {
+                const createMaxIdRecordResult = await excuteQuery({
+                    query:`INSERT INTO js_maxids (js_maxids.table,max_id) VALUES ('posts','${result.insertId + 1}')`
+                })
+                console.log(createMaxIdRecordResult, 'createMaxIdRecordResult')   
+            }
             
             
             res.json(result)

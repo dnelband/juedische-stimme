@@ -8,6 +8,8 @@ import TagForm from './TagForm';
 
 const PostForm = ({post,nextPostId,categories}) => {
 
+  console.log(nextPostId, " NEXT POST ID")
+
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -49,11 +51,11 @@ const PostForm = ({post,nextPostId,categories}) => {
                 // post_date_gmt: like post_date but one hour less
                 post_name:values.post_title.replace(/\s+/g, '-').toLowerCase().replace(),
                 post_modified: dateTimeHelper(new Date()),
-                previousCategoryId: post ? post.categoryId : null
+                previousCategoryId: post ? post.categoryId : null,
+                nextPostId
             }
         }).then((response) => {
-            console.log(response,"response on post");
-            if (!post) window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
+            if (!post) window.location.href = `/admin/posts/${values.post_title.replace(/\s+/g, '-').toLowerCase().replace()}` // BETTER FETCH THE POSTS THEN REFRESH PAGE
             else window.location.reload()
         }, (error) => {
             console.log(error, "ERROR on post");
@@ -72,6 +74,7 @@ const PostForm = ({post,nextPostId,categories}) => {
 
   return (
     <div className={styles.container}>
+      {!post ? <p>* please save the post before adding images or tags!</p> : ""}
       <form onSubmit={formik.handleSubmit}>
         <div className={styles['form-row']}>
           <label htmlFor="post_title">POST TITLE</label>

@@ -30,6 +30,11 @@ const MediaItems = ({mediaItems}) => {
             // TO DO - NEED TO HAVE A DIFFERENT DISPLAY FOR VIDEOS!!!!!!!!!!!(!!!)
             <li key={index}>
                 <Image width={'100px'} height={'100px'} src={`/wp-content/uploads/${mediaItem.meta_value}`}/>
+                <br/>
+                <span>
+                    POST: {mediaItem.post_name ? <a href={`/admin/posts/${mediaItem.post_name}`}>{mediaItem.post_title}</a> : " DELETED!"}
+                </span>
+                <br/>
                 <button onClick={() => deleteMediaItem(mediaItem)}>
                     DELETE MEDIA ITEM
                 </button>

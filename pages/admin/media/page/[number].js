@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react'
-import { Context } from "../../../../context";
-import { selectMediaItems } from '../../../../lib/queries'
-import excuteQuery from '../../../../lib/db'
-import styles from '../../../../styles/Home.module.css'
-import MediaItems from '../../../../components/admin/MediaItems';
+import { Context } from "context";
+import { selectMediaItems } from 'lib/queries'
+import excuteQuery from 'lib/db'
+import styles from 'styles/Home.module.css'
+import MediaItems from 'components/admin/MediaItems';
 
 export default function AdminMediaPage({mediaItems}) {
   
@@ -36,6 +36,7 @@ export const getServerSideProps = async (context) => {
     query:selectMediaItems(50,context.query.number)
   });
   const mediaItems = JSON.stringify(mediaResponse);
+  console.log(mediaItems)
   return {
     props:{
       mediaItems:mediaItems

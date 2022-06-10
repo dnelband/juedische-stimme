@@ -1,14 +1,12 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
+
 import { useContext, useEffect } from 'react'
 
-import styles from '../../../../styles/Home.module.css'
-import excuteQuery from '../../../../lib/db'
+import styles from 'styles/Home.module.css'
+import excuteQuery from 'lib/db'
 
-import { Context } from "../../../../context";
-import AdminPosts from '../../../../components/admin/Posts'
-import { selectPosts } from '../../../../lib/queries'
+import { Context } from "context";
+import AdminPosts from 'components/admin/Posts'
+import { selectPosts } from 'lib/queries'
 
 export default function AdminPostsPage(props) {
   
@@ -45,6 +43,7 @@ export const getServerSideProps = async (context) => {
         fieldsList:['post_title','post_name','post_date']})
     });
     const posts = JSON.stringify(postsResponse);
+    
     return {
       props:{
         posts,

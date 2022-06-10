@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import dateTimeHelper from 'helpers/dateTimeHelper';
@@ -6,9 +6,7 @@ import styles from 'styles/Form.module.css';
 import TiptapEditor from '../tiptap/TipTapEditor';
 import TagForm from './TagForm';
 
-const PostForm = ({post,nextPostId}) => {
-  
-  console.log(post)
+const PostForm = ({post,nextPostId,categories}) => {
 
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
@@ -36,15 +34,10 @@ const PostForm = ({post,nextPostId}) => {
         post_type: post ? post.post_type : '',
         post_mime_type:  post ? post.post_mime_type : '',
         comment_count: post ? post.comment_count : '',
-        menu_type: post ? post.menu_type : ''
+        menu_type: post ? post.menu_type : '',
+        categoryId: post ? post.categoryId : 2
     },
     onSubmit: values => {
-
-        // alert(JSON.stringify(values, null, 2));
-
-        console.log(values.post_content)
-
-        console.log( dateTimeHelper(new Date()))
 
         axios({
             method: post ? 'put' : 'post',
@@ -54,7 +47,8 @@ const PostForm = ({post,nextPostId}) => {
                 post_date:post ? post.post_date : dateTimeHelper(new Date()),
                 // post_date_gmt: like post_date but one hour less
                 post_name:values.post_title.replace(/\s+/g, '-').toLowerCase().replace(),
-                post_modified: dateTimeHelper(new Date())
+                post_modified: dateTimeHelper(new Date()),
+                previousCategoryId: post ? post.categoryId : null
             }
         }).then((response) => {
             console.log(response,"response on post");
@@ -68,6 +62,13 @@ const PostForm = ({post,nextPostId}) => {
     },
   });
 
+  let selectCategoriesDisplay;
+  if (categories){
+    selectCategoriesDisplay = categories.map((category,index)=>(
+      <option value={category.term_id}>{category.name}</option>
+    ))
+  }
+
   return (
     <div className={styles.container}>
       <form onSubmit={formik.handleSubmit}>
@@ -80,6 +81,17 @@ const PostForm = ({post,nextPostId}) => {
             onChange={formik.handleChange}
             value={formik.values.post_title}
           />
+        </div>
+        <div className={styles['form-row']}>
+          <label htmlFor="categoryId">CATEGORY</label>
+          <select 
+            id="categoryId"
+            name="categoryId"
+            type="categoryId"
+            value={formik.values.categoryId} 
+            onChange={formik.handleChange}>
+            {selectCategoriesDisplay}
+          </select>
         </div>
         <div className={styles['form-row']}>
           <label htmlFor='post_content'>Post Content</label>

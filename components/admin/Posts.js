@@ -9,7 +9,10 @@ function Posts({posts}) {
 
         axios({
             method: 'delete',
-            url: `/api/posts/${post.postId}`
+            url: `/api/posts/${post.postId}`,
+            body:{
+                categoryId:post.categoryId
+            }
         }).then((response) => {
             window.location.reload()
             console.log(response,"response on delete post");

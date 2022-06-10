@@ -7,7 +7,8 @@
 }
 .form-row label,
 .form-row input,
-.form-row textarea {
+.form-row textarea,
+.form-row select {
   width: 100%;
 }
 .form-row textarea {

@@ -5,6 +5,7 @@ import { mediaItems } from "./reducers/mediaItems";
 import { comments } from "./reducers/comments";
 import { facebook } from "./reducers/facebook";
 import { galleries } from "./reducers/galleries";
+import { categories } from "./reducers/categories";
 
 // initial state
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   mediaItems:[],
   comments:[],
   facebook:{},
-  galleries:[]
+  galleries:[],
+  categories:[]
 };
 
 // create context
@@ -27,7 +29,7 @@ const combineReducers = (...reducers) => (state, action) => {
 
 // context provider
 const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(combineReducers(user,posts,mediaItems,comments,facebook,galleries), initialState); // pass more reducers combineReducers(user, blogs, products)
+  const [state, dispatch] = useReducer(combineReducers(user,posts,mediaItems,comments,facebook,galleries,categories), initialState); // pass more reducers combineReducers(user, blogs, products)
   const value = { state, dispatch };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

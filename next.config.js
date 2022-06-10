@@ -12,6 +12,10 @@ const nextConfig = {
         destination: '/tag/:slug/page/1',
         permanent: false,
       },{
+        source: '/category/:name',
+        destination: '/category/:name/page/1',
+        permanent: false,
+      },{
         source: '/search/:phrase',
         destination: '/search/:phrase/page/1',
         permanent: false,
@@ -38,6 +42,10 @@ const nextConfig = {
       },{
         source: '/admin/galleries',
         destination: '/admin/galleries/page/1',
+        permanent: false,
+      },{
+        source: '/admin/categories',
+        destination: '/admin/categories/page/1',
         permanent: false,
       }
     ]

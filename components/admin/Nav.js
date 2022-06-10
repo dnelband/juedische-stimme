@@ -7,6 +7,7 @@ function AdminNav() {
       <ul>
         <li><Link href='/admin'>Dashboard</Link></li>
         <li><Link href='/admin/posts'>Posts</Link></li>
+        <li><Link href='/admin/categories'>Categories</Link></li>
         <li><Link href='/admin/galleries'>Galleries</Link></li>
         <li><Link href='/admin/media'>Media</Link></li>
         <li><Link href='/admin/pages'>Pages</Link></li>

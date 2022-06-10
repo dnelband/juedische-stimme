@@ -18,7 +18,7 @@ export default function PostsPage(props) {
 
   return (
     <div className={styles.container}>
-        {state.posts ? <Posts posts={state.posts} phrase={props.phrase}/> : ""}
+        {state.posts && state.posts.length > 0 ? <Posts posts={state.posts} phrase={props.phrase}/> : <h2>nothing found for '{props.phrase}'!</h2>}
         {/* PAGINATION NEEDED */
         // get total number of items - in this case post by COUNTING the table rows
         // create a reuseable component to display pagination

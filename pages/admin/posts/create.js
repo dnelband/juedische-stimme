@@ -17,6 +17,7 @@ export default function CreatePostPage(props) {
   
   return (
     <div className={styles.container}>
+      <h2>NEW POST</h2>
       <PostForm 
         nextPostId={nextPostId}
         categories={state.categories}
@@ -32,6 +33,7 @@ export const getServerSideProps = async (context) => {
     query: ` SELECT MAX( ID ) FROM wp_posts;`
   });
   const maxId = JSON.stringify(maxIdResponse);
+  console.log(maxId)
   const categoriesResponse = await excuteQuery({
     query: selectCategories(50,context.query.number)
   });

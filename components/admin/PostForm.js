@@ -39,6 +39,7 @@ const PostForm = ({post,nextPostId,categories}) => {
     },
     onSubmit: values => {
 
+
         axios({
             method: post ? 'put' : 'post',
             url: `/api/posts${post ? "/" + post.postId : ''}`,

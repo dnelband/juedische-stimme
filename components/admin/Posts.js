@@ -5,12 +5,8 @@ function Posts({posts}) {
 
     function deletePost(post){
 
-        console.log(post.postId,"post")
-
-        axios({
-            method: 'delete',
-            url: `/api/posts/${post.postId}`,
-            body:{
+        axios.delete(`/api/posts/${post.postId}`, {
+            data: {
                 categoryId:post.categoryId
             }
         }).then((response) => {

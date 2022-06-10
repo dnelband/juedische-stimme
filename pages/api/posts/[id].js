@@ -1,9 +1,12 @@
-import { deletePost, updatePost, updateTermRelationship } from 'lib/queries';
+import { decreaseTermTaxonomyCount, deletePost, incrementTermTaxonomyCount, updatePost, updateTermRelationship } from 'lib/queries';
 import excuteQuery from 'lib/db'
 
 export default async (req, res) => {
     try {
         if (req.method === 'PUT') {
+
+            console.log(req.body.previousCategoryId, " PREVIOUS CATEGORY ID")
+            console.log(req.body.categoryId, " CATEGORY ID")
 
             const result = await excuteQuery({
                 query: updatePost(req.body,req.query.id)
@@ -17,12 +20,12 @@ export default async (req, res) => {
                 console.log(categoryChangedResult, "categoryChangedResult")
                 // increment new category's count
                 const incrementCategoryCountResult = await excuteQuery({
-                    query:`UPDATE wp_term_taxonomy SET count=count+1 WHERE term_id='${req.body.categoryId}'`
+                    query:incrementTermTaxonomyCount(req.body.categoryId)
                 })
                 console.log(incrementCategoryCountResult," incrementCategoryCountResult")
                 // decrease old category's count
                 const decreaseCategoryCountResult = await excuteQuery({
-                    query:`UPDATE wp_term_taxonomy SET count=count-1 WHERE term_id='${req.body.previousCategoryId}'`
+                    query:decreaseTermTaxonomyCount(req.body.previousCategoryId)
                 })
                 console.log(decreaseCategoryCountResult," decreaseCategoryCountResult")
                 // update previous category wp_terms
@@ -37,7 +40,10 @@ export default async (req, res) => {
             const result = await excuteQuery({
                 query: deletePost(req.query.id)
             });
-
+            const decreaseCategoryCountResult = await excuteQuery({
+                query:decreaseTermTaxonomyCount(req.body.categoryId)
+            })
+            console.log(decreaseCategoryCountResult," decreaseCategoryCountResult")
             // console.log(result,"result")
             res.json(result)
         }

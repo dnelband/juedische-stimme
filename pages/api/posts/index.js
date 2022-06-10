@@ -1,5 +1,5 @@
 import excuteQuery from 'lib/db'
-import { insertPost, insertTermRelationship } from 'lib/queries';
+import { incrementTermTaxonomyCount, insertPost, insertTermRelationship } from 'lib/queries';
 
 export default async (req, res) => {
     try {
@@ -10,13 +10,15 @@ export default async (req, res) => {
             });
             console.log(result,"result")
 
+            console.log(req.body.categoryId, " REQ BODY CATEGORY ID")
+
             const insertTermRelationshipResult = await excuteQuery({
                 query: insertTermRelationship(req.body.categoryId, result.insertId)
             })
             console.log(insertTermRelationshipResult, " INSERT TERM RELATIONSHIP RESULT")            
 
             const incrementCategoryCountResult = await excuteQuery({
-                query:`UPDATE wp_term_taxonomy SET count=count+1 WHERE term_id='${req.body.categoryId}'`
+                query:incrementTermTaxonomyCount(req.body.categoryId)
             })
             console.log(incrementCategoryCountResult," incrementCategoryCountResult")
             

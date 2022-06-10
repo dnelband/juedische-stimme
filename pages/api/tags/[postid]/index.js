@@ -8,26 +8,23 @@ export default async (req, res) => {
             const insertTermResult = await excuteQuery({
                 query: insertTerm(req.body)
             });
-            console.log(insertTermResult, " INSERT TERM RESULT ")
-
+            // console.log(insertTermResult, " INSERT TERM RESULT ")
             const termId = insertTermResult.insertId
             const body = {
                 term_id:termId,
                 taxonomy:'post_tag',
                 description:'',
                 parent:'0',
-                count:'0'
+                count:'1'
             }
             const insertTermTaxonomyResult = await excuteQuery({
                 query: insertTermTaxonomy(body)
             });
-            console.log(insertTermTaxonomyResult , "INSERT TERM TAXONOMY RESULT")
-
+            // console.log(insertTermTaxonomyResult , "INSERT TERM TAXONOMY RESULT")
             const insertTermRelationshipResult = await excuteQuery({
                 query: insertTermRelationship(termId,req.query.postid)
             });
-            console.log(insertTermRelationshipResult, " INSERT TERM RELATIONSHIP RESULT")
-
+            // console.log(insertTermRelationshipResult, " INSERT TERM RELATIONSHIP RESULT")
             res.json({message:'tag created!'})
         } else {
             const result = await excuteQuery({

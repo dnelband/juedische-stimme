@@ -13,6 +13,7 @@ export default function EditGalleryPage(props) {
 
   return (
     <div className={styles.container}>
+      <h2>EDIT GALLERY</h2>
       {state.gallery ? <GalleryForm gallery={state.gallery} /> : ''}
     </div>
   )

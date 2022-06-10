@@ -13,6 +13,7 @@ export default function EditPostPage(props) {
   },[])
   return (
     <div className={styles.container}>
+      <h2>EDIT POST</h2>
       {state.post ? <PostForm post={state.post} categories={state.categories} /> : ''}
     </div>
   )

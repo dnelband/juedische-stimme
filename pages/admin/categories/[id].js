@@ -12,6 +12,7 @@ export default function EditCategoryPage(props) {
   },[])
   return (
     <div className={styles.container}>
+      <h2>EDIT CATEGORY</h2>
       {state.category ? <CategoryForm category={state.category} /> : ''}
     </div>
   )

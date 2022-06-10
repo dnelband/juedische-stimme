@@ -7,12 +7,19 @@ export default async (req, res) => {
             const result = await excuteQuery({
                 query: insertTermRelationship(req.query.termid,req.query.postid)
             });
+            const incrementTagCountResult = await excuteQuery({
+                query:`UPDATE wp_term_taxonomy SET count=count+1 WHERE term_id='${req.query.termid}'`
+            })
             res.json(result)
         }
         else if (req.method === 'DELETE') {
             const result = await excuteQuery({
                 query: deleteTermRelationship(req.query.termid,req.query.postid)
             });
+            const decreaseTagCountResult = await excuteQuery({
+                query:`UPDATE wp_term_taxonomy SET count=count-1 WHERE term_id='${req.query.termid}'`
+            })
+            console.log(decreaseTagCountResult," decreaseTagCountResult")
             // console.log(result,"result")
             res.json(result)
         }

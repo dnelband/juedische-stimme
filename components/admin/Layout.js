@@ -15,7 +15,7 @@ function AdminLayout({ children }) {
           <ul>
             <li><Link href="/admin/posts/create">POST</Link></li>
             <li><Link href="/admin/categories/create">CATEGORY</Link></li>
-            <li>PAGE</li>
+            <li><Link href="/admin/menus/create">MENU ITEM</Link></li>
             <li><Link href="/admin/galleries/create">Gallery</Link></li>
             <li>USER</li>
           </ul>

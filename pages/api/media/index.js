@@ -1,5 +1,5 @@
-import excuteQuery from '../../../lib/db'
-import { insertMediaItem } from '../../../lib/queries';
+import excuteQuery from 'lib/db'
+import { insertMediaItem } from 'lib/queries';
 
 export default async (req, res) => {
     try {

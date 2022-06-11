@@ -25,7 +25,7 @@ const MenuItems = ({menuItems}) => {
     if (menuItems){
         menuItemsDisplay = menuItems.map((menuItem, index)=>(
             <li key={index}>
-                title: {menuItem.post_title} <br/> 
+                title: <a href={`/admin/menus/${menuItem.term_id}`}>{menuItem.post_title}</a> <br/> 
                 id: {menuItem.ID} <br/>
                 menu: {menuItem.taxonomy} <br/>
                 <button onClick={() => deleteMenuItem(menuItem)}>delete menu item</button>

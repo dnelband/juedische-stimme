@@ -7,6 +7,8 @@ import GalleryImageForm from './GalleryImageForm';
 
 function GalleryForm({gallery}){
 
+    
+
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     const formik = useFormik({
@@ -32,12 +34,33 @@ function GalleryForm({gallery}){
 
         },
     });
+    
+    function deleteImage(galleryImage){
+        console.log(galleryImage, " GALLERY IMAGE")
+        const deleteFileUrl = `http://${window.location.hostname}:4000/media/${galleryImage.image_src.split('/').join('+++')}`;
+        const deleteFileRequest = axios.delete(deleteFileUrl)
+        const deleteGalleryImageUrl = `/api/galleryimage/${galleryImage.image_id}`
+        const deleteGalleryImageRequest = axios.delete(deleteGalleryImageUrl)
+        axios.all([deleteFileRequest, deleteGalleryImageRequest]).then(axios.spread((...responses) => {
+            const deleteFileResponse = responses[0]
+            const deleteGalleryImageResponse = responses[1]
+            console.log(deleteFileResponse)
+            console.log(deleteGalleryImageResponse)
+            // const deletedImageIndex = gallery.images.findIndex(image => galleryImage.image_id === image.image_id);
+            window.location.reload()
+            // use/access the results 
+        })).catch(errors => {
+            console.log(errors, " ERRORS")
+            // react on errors.
+        })
+    }
 
     let galleryImagesDisplay = 'no images in gallery YET!';
     if (gallery && gallery.images){
         galleryImagesDisplay = gallery.images.map((galleryImage,index) => (
             <div key={index} className='gallery-form-image'>
                 <img src={`/wp-content/uploads/${galleryImage.image_src}`} width="300" />
+                <button onClick={() => deleteImage(galleryImage)}>DELETE</button>
             </div>
         ))
     }

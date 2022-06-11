@@ -74,7 +74,7 @@ const PostForm = ({post,nextPostId,categories}) => {
 
   return (
     <div className={styles.container}>
-      {!post ? <p>* please save the post before adding images or tags!</p> : ""}
+      {post ? <p><a target={"_blank"} href={"/"+post.post_name}>view post on live site</a></p> : ""}
       <form onSubmit={formik.handleSubmit}>
         <div className={styles['form-row']}>
           <label htmlFor="post_title">POST TITLE</label>

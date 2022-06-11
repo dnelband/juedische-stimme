@@ -5,15 +5,20 @@ import styles from 'styles/Form.module.css';
 
 const MenuItemForm = ({menuItem}) => {
 
+    console.log(menuItem)
+
     const [ searchPhrase, setSearchPhrase ] = useState('')
     const [ postOptions , setPostOptions ] = useState([])
     const [ showPostOptions, setShowPostOptions ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
-            post_id: menuItem ? menuItem.post_id : '',
+            term_id: menuItem ? menuItem.term_id : '',
+            post_title: menuItem ? menuItem.post_title : '',
+            post_id: menuItem ? menuItem.ID : '',
             post_name: menuItem ? menuItem.post_name : '',
-            taxonomy: menuItem ? menuItem.taxonomy : 'main_menu'
+            taxonomy: menuItem ? menuItem.taxonomy : 'main_menu',
+            previousTaxonomy: menuItem ? menuItem.taxonomy : ''
         },
         onSubmit: values => {
             console.log(values)
@@ -40,7 +45,9 @@ const MenuItemForm = ({menuItem}) => {
     },[searchPhrase])
 
     useEffect(() => {
-        setSearchPhrase(formik.values.post_title)
+        if (!menuItem){
+            setSearchPhrase(formik.values.post_title)
+        }
     },[formik.values.post_title])
 
     async function getPostsBySearchPhrase(){
@@ -80,9 +87,11 @@ const MenuItemForm = ({menuItem}) => {
                         id="post_title"
                         name="post_title"
                         type="post_title"
+                        placeholder='Find post by title...'
                         onFocus={() => setShowPostOptions(true)}
                         onChange={formik.handleChange}
                         value={formik.values.post_title}
+                        disabled={menuItem ? true : false}
                     />
                     <ul>{postOptionsDisplay}</ul>
                 </div>

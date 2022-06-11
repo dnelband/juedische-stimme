@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import styles from 'styles/Form.module.css';
 import TipTapEditor from 'components/tiptap/TipTapEditor';
+import uuid from 'react-uuid'
 
 function GalleryImageForm({galleryImage, galleryId, addImageToGallery}){
 
@@ -19,10 +20,10 @@ function GalleryImageForm({galleryImage, galleryId, addImageToGallery}){
         const formData = new FormData();
         let fileName = event.target.files[0].name;
         Array.from(event.target.files).forEach((file) => {
+            console.log(event.target.name, file)
             formData.append(event.target.name, file);
         });
         uploadImage(formData,fileName);
-        console.log(fileInputRef);
         //   fileInputRef.current?.reset();
 
     };
@@ -38,6 +39,7 @@ function GalleryImageForm({galleryImage, galleryId, addImageToGallery}){
         };
 
         const response = await axios.post('/api/uploads', formData, config);
+        console.log(response, " RESPONSE OF UPLOAD")
 
         const today = new Date();
         let month = today.getMonth();

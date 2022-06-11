@@ -25,9 +25,16 @@ const FacebookFeed = (props) => {
             
             const fbFeedUpdatedMonth = parseInt(state.facebook.feed.date_updated.split('-')[1]);
             const fbFeedUpdatedDay = parseInt(state.facebook.feed.date_updated.split('-')[2])
+
+            console.log(fbFeedUpdatedMonth, fbFeedUpdatedDay)
+
             const today = new Date();
             const month = today.getMonth() + 1;
             const day = today.getDate();
+
+            console.log(day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth)
+
+            console.log(month, day)
             if (day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth) fetchFacebookFeed()
         }
     }

@@ -15,7 +15,7 @@ export default function Home(props) {
     dispatch({type:'SET_HEADER_GALLERY', payload:JSON.parse(props.headerGallery)[0]})
     dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
     dispatch({type:'SET_FB_DATA',payload:{
-      token:props.fbToken,
+      token:JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null,
       feed:JSON.parse(props.fbFeed)[0],
       events:JSON.parse(props.fbEvents)[0]
     }})
@@ -76,6 +76,11 @@ export const getServerSideProps = async () => {
   });
   const posts = JSON.stringify(postsResponse);
 
+  const fbTokenResponse = await excuteQuery({
+    query: `SELECT * FROM fb_token LIMIT 1`
+  });
+  const fbToken = JSON.stringify(fbTokenResponse);
+
   const fbFeedResponse = await excuteQuery({
     query: `SELECT * FROM fb_feed WHERE type='posts' ORDER BY ID DESC LIMIT 1`
   })
@@ -86,15 +91,13 @@ export const getServerSideProps = async () => {
   })
   const fbEvents = JSON.stringify(fbEventsReponse)
 
-  // bobsondugnutthc?fields=events.limit(10)
-
   return {
     props:{
       headerGallery,
       posts,
       fbFeed,
       fbEvents,
-      fbToken:process.env.FACEBOOK_ACCESS_TOKEN
+      fbToken
     }
   }
 }

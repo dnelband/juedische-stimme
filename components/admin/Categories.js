@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AdminCategories = ({categories}) => {
+const AdminCategories = ({ categories }) => {
     let categoriesDisplay;
     if (categories){
         console.log(categories)

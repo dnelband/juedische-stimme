@@ -36,7 +36,6 @@ export const getServerSideProps = async (context) => {
     query:selectMediaItems(50,context.query.number)
   });
   const mediaItems = JSON.stringify(mediaResponse);
-  console.log(mediaItems)
   return {
     props:{
       mediaItems:mediaItems

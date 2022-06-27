@@ -6,7 +6,7 @@ const MediaItems = ({mediaItems}) => {
 
     function deleteMediaItem(mediaItem){
 
-        const deleteFileUrl = `http://${window.location.hostname}:4000/media/${mediaItem.meta_value.split('/').join('+++')}`;
+        const deleteFileUrl = `http://${window.location.hostname}${window.location.port !== 80 ? ':'+window.location.port : ""}/media/${mediaItem.meta_value.split('/').join('+++')}`;
         const deleteFileRequest = axios.delete(deleteFileUrl)
         const deleteMediaItemUrl = `/api/media/${mediaItem.meta_id}`
         const deleteMediaItemRequest = axios.delete(deleteMediaItemUrl)

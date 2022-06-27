@@ -13,8 +13,6 @@ export default function AdminCommentsPage(props) {
         dispatch({type:"SET_GALLERIES",payload:JSON.parse(props.galleries)})
     },[])
 
-    console.log(state.galleries)
-
     return (
         <div className={styles.container}>
             <h2>Galleries</h2>

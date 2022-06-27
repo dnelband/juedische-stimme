@@ -4,11 +4,7 @@ import { selectMenuItemById } from 'lib/queries';
 import MenuItemForm from 'components/admin/MenuItemForm';
 
 export default function AdminMenuItemEditPage(props) {
-  
     const menuItem = JSON.parse(props.menuItem)[0];
-
-    console.log(menuItem)
-
     return (
         <div className={styles.container}>
             <h2>EDIT MENU ITEM</h2>
@@ -25,7 +21,6 @@ export const getServerSideProps = async (context) => {
     query: selectMenuItemById(context.query.id)
   });
   const menuItem = JSON.stringify(menuItemReponse);
-  console.log(menuItem)
   return {
     props:{
         menuItem

@@ -37,7 +37,7 @@ function GalleryForm({gallery}){
     
     function deleteImage(galleryImage){
         console.log(galleryImage, " GALLERY IMAGE")
-        const deleteFileUrl = `http://${window.location.hostname}:4000/media/${galleryImage.image_src.split('/').join('+++')}`;
+        const deleteFileUrl = `http://${window.location.hostname}${window.location.port !== 80 ? ':'+window.location.port : ""}/media/${galleryImage.image_src.split('/').join('+++')}`;
         const deleteFileRequest = axios.delete(deleteFileUrl)
         const deleteGalleryImageUrl = `/api/galleryimage/${galleryImage.image_id}`
         const deleteGalleryImageRequest = axios.delete(deleteGalleryImageUrl)

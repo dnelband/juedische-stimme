@@ -11,7 +11,7 @@ const Galleries = (props) => {
           let imageSrcs = gallery.imageSrcs.split(',')
           let imageIds = gallery.imageIds.split(',')
           imageSrcs.forEach(function(imageSrc,index){
-            const deleteFileUrl = `http://${window.location.hostname}:4000/media/${imageSrc.split('/').join('+++')}`;
+            const deleteFileUrl = `http://${window.location.hostname}${window.location.port !== 80 ? ':'+window.location.port : ""}/media/${imageSrc.split('/').join('+++')}`;
             const deleteFileRequest = axios.delete(deleteFileUrl)
             deleteRequests.push(deleteFileRequest)
             const deleteGalleryImageUrl = `/api/galleryimage/${imageIds[index]}`

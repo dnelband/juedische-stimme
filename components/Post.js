@@ -1,3 +1,4 @@
+import { comments } from 'context/reducers/comments';
 import React from 'react'
 
 function Post({ post }) {
@@ -15,6 +16,14 @@ function Post({ post }) {
             let tagsArray = [post.tagNames];
             if (post.tagNames.indexOf(',') > -1) tagsArray = post.tagNames.split(',')
             tagsDisplay = tagsArray.map((tag,index) => (<a key={index} href={"/tag/"+tag}>{' <' + tag + '> '}</a>))
+        }
+        let commentsDisplay;
+        if (post.comments && post.comments.length > 0){
+            console.log(post.comments)
+            commentsDisplay = post.comments.map((comments,index)=>(
+                <div key={Date.now()}>
+                </div>
+            ))
         }
         postDisplay = (
             <React.Fragment>

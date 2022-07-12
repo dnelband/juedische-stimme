@@ -1,48 +1,52 @@
-import React, {useEffect, useState, useContext } from 'react'
-import { Context } from 'context';
+import React, {useEffect } from 'react'
 
 import dateTimeHelper from 'helpers/dateTimeHelper'
 import axios from 'axios'
 import renderToString from 'helpers/renderToString'
 
+import { setFeed  } from 'store/fbdata/fbDataSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 const FacebookFeed = (props) => {
 
-    const { state, dispatch } = useContext(Context)
+    const dispatch = useDispatch();
+    const token = useSelector(state => state.fbData.token)
+    const feed = useSelector(state => state.fbData.feed);
 
-    const [ feed, setFeed ] = useState()
-    
     useEffect(() => {
-            if (state.facebook.token){
+            if (token){
                 initFacebookFeed()
             }
-    }, [state.facebook])
+    }, [token])
     
     async function initFacebookFeed(){
-        if (!state.facebook.feed){
+        if (!feed){
             fetchFacebookFeed()
         } else {
-            setFeed(JSON.parse(state.facebook.feed.content))
-            
-            const fbFeedUpdatedMonth = parseInt(state.facebook.feed.date_updated.split('-')[1]);
-            const fbFeedUpdatedDay = parseInt(state.facebook.feed.date_updated.split('-')[2])
-
-            console.log(fbFeedUpdatedMonth, fbFeedUpdatedDay)
-
+            const fbFeedUpdatedMonth = parseInt(feed.date_updated.split('-')[1]);
+            const fbFeedUpdatedDay = parseInt(feed.date_updated.split('-')[2])
             const today = new Date();
             const month = today.getMonth() + 1;
             const day = today.getDate();
 
             console.log(day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth)
 
-            console.log(month, day)
             if (day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth) fetchFacebookFeed()
         }
     }
 
     async function fetchFacebookFeed(){
         
-        const res  = await fetch(`https://graph.facebook.com/1297004353776035/feed?limit=3&fields=full_picture,story,message&access_token=${state.facebook.token}`)
+        console.log('FEATCH')
+
+        const pageTokenRes = await fetch(`https://graph.facebook.com/PAGE-ID?fields=access_token&access_token=${token}`)
+        const pageToken = await pageTokenRes.json()
+        console.log(pageToken, " PAGE TOKEN ")
+
+        const res  = await fetch(`https://graph.facebook.com/1297004353776035/feed?limit=3&fields=full_picture,story,message&access_token=${token}`)
         const fetchedFeed = await res.json()
+        console.log(fetchedFeed, " FETACHED FEED")
+
         // remove all the weird characters from the content to avoid mySql errors
         if (fetchedFeed.data && fetchedFeed.data.length > 0){
             const renderedFeed = renderToString(fetchedFeed.data);
@@ -56,7 +60,7 @@ const FacebookFeed = (props) => {
                     type:'posts'
                 }
             }).then((response) => {
-                setFeed(fetchedFeed.data)
+                dispatch(setFeed(fetchedFeed.data))
                 console.log(response,"response on create fb feed record");
                 // window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
             }, (error) => {
@@ -67,8 +71,9 @@ const FacebookFeed = (props) => {
     }
 
     let feedDisplay;
-    if (feed && feed.length > 0){
-        feedDisplay = feed.map((fbPost, index) => {
+    if (feed && feed.content && feed.content.length > 0){
+        const feedArray = JSON.parse(feed.content)
+        feedDisplay = feedArray.map((fbPost, index) => {
             if (index <= 2){
                 return (
                     <div key={index} style={{width: "33%", float: "left",padding:"5px"}}>

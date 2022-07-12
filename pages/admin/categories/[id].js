@@ -1,19 +1,23 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import styles from 'styles/Home.module.css'
 import excuteQuery from 'lib/db'
-import { Context } from "context"
 import CategoryForm from 'components/admin/CategoryForm'
 import { selectCategoryById } from 'lib/queries'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCategory } from 'store/categories/categoriesSlice'
 
 export default function EditCategoryPage(props) {
-  const { state, dispatch } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch()
+  const { category } = useSelector(state => state.categories)
+
   useEffect(() => {
-    dispatch({type:'SET_CATEGORY',payload:JSON.parse(props.category)[0]})
+    dispatch(setCategory(JSON.parse(props.category)[0]))
   },[])
   return (
     <div className={styles.container}>
       <h2>EDIT CATEGORY</h2>
-      {state.category ? <CategoryForm category={state.category} /> : ''}
+      {category ? <CategoryForm category={category} /> : ''}
     </div>
   )
 }

@@ -13,6 +13,7 @@ function AdminNav() {
         <li><Link href='/admin/menus'>Menus</Link></li>
         <li><Link href='/admin/comments'>Comments</Link></li>
         <li><Link href='/admin/users'>Users</Link></li>
+        <li><Link href='/admin/fbtoken'>Facebook Token</Link></li>
       </ul>
     </div>
   )

@@ -1,26 +1,22 @@
-import { useContext, useEffect } from 'react'
-
+import { useEffect } from 'react'
 import styles from 'styles/Home.module.css'
 import excuteQuery from 'lib/db'
-
-import { Context } from "context";
 import { selectCategories } from 'lib/queries'
-
 import AdminCategories from 'components/admin/Categories';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setCatgories } from 'store/categories/categoriesSlice';
+
 export default function AdminCategoriesPage(props) {
-  
-  const { state, dispatch } = useContext(Context);
-
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state => state.categories)
   useEffect(() => {
-    dispatch({type:'SET_CATEGORIES',payload:JSON.parse(props.categories)})
+    dispatch(setCatgories(JSON.parse(props.categories)))
   },[])
-
   let categoriesDisplay;
-  if (state.categories){
-    categoriesDisplay = <AdminCategories categories={state.categories}/>
+  if (categories){
+    categoriesDisplay = <AdminCategories categories={categories}/>
   }
-  
   return (
     <div className={styles.container}>
         <h2>Categories</h2>

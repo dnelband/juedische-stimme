@@ -1,38 +1,35 @@
-import Head from 'next/head'
-import Image from 'next/image'
- 
-import { useContext, useEffect } from 'react'
-
-import styles from '../../../../styles/Home.module.css'
-import excuteQuery from '../../../../lib/db'
-
-import { Context } from "../../../../context";
-import { selectUsers } from '../../../../lib/queries'
+import { useEffect } from 'react'
+import styles from 'styles/Home.module.css'
+import excuteQuery from 'lib/db'
+import { selectUsers } from 'lib/queries'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUsers } from 'store/users/usersSlice'
 
 export default function AdminUserPage(props) {
-  
-  const { state, dispatch } = useContext(Context);
-  
-    useEffect(() => {
-        dispatch({type:"SET_USERS",payload:JSON.parse(props.users)})
-    },[])
+    
+  const dispatch = useDispatch();
+  const {users} = useSelector(state => state.users)
 
-    let usersDisplay;
-    if (state.users){
-        usersDisplay = state.users.map((user,index) => (
-            <li key={index}>{user.user_login}</li>
-        ))
-    }
+  useEffect(() => {
+    dispatch(setUsers(JSON.parse(props.users)))
+  },[])
 
-    return (
-        <div className={styles.container}>
-            <h2>Users</h2>
-            <hr/>
-            <ul>
-                {usersDisplay}
-            </ul>
-        </div>
-    )
+  let usersDisplay;
+  if (users){
+      usersDisplay = users.map((user,index) => (
+          <li key={Date.now()}>{user.user_login}</li>
+      ))
+  }
+
+  return (
+    <div className={styles.container}>
+        <h2>Users</h2>
+        <hr/>
+        <ul>
+            {usersDisplay}
+        </ul>
+    </div>
+  )
 }
 
 AdminUserPage.layout = "admin"

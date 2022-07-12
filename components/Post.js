@@ -1,4 +1,3 @@
-import { comments } from 'context/reducers/comments';
 import React from 'react'
 
 function Post({ post }) {

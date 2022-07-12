@@ -1,24 +1,29 @@
 
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import styles from 'styles/Home.module.css'
 import excuteQuery from 'lib/db'
 
-import { Context } from "context";
 import AdminPosts from 'components/admin/Posts'
 import { selectPosts } from 'lib/queries'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setPosts } from 'store/posts/postsSlice';
+
+
 export default function AdminPostsPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch()
+  const { posts } = useSelector(state => state.posts)
 
   useEffect(() => {
-    dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
+    dispatch(setPosts(JSON.parse(props.posts)))
   },[])
 
   let postsDisplay;
-  if (state.posts){
-    postsDisplay = <AdminPosts posts={state.posts}/>
+  if (posts){
+    postsDisplay = <AdminPosts posts={posts}/>
   }
   
   return (

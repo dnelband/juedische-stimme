@@ -6,7 +6,7 @@ import TiptapEditor from '../tiptap/TipTapEditor';
 
 const CategoryForm = ({category}) => {
 
-    console.log(category)
+    // console.log(category)
 
     const formik = useFormik({
         initialValues: {

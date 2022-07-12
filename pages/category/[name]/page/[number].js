@@ -1,23 +1,30 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectCategories, selectPostsByTag } from 'lib/queries'
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
 import SearchFilter from 'components/SearchFilter';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setPosts } from 'store/posts/postsSlice';
+import { setCatgories } from 'store/categories/categoriesSlice'
+
 export default function PostsPage(props) {
-  const { state, dispatch } = useContext(Context);
+
+
+  const dispatch = useDispatch()
+  const { posts } = useSelector(state => state.posts)
+  const { categories } = useSelector(state => state.categories)
+
   useEffect(() => {
-    dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
-    console.log(props.categories)
-    dispatch({type:'SET_CATEGORIES',payload:JSON.parse(props.categories)})
+    dispatch(setPosts(JSON.parse(props.posts)))
+    dispatch(setCatgories(JSON.parse(props.categories)))
   },[])
-  console.log(state)
+
   return (
     <div className={styles.container}>
-        {state.categories ? <SearchFilter categoryName={props.categoryName} categories={state.categories} /> : ""}
-        {state.posts ? <Posts posts={state.posts}/> : ""}
+        {categories ? <SearchFilter categoryName={props.categoryName} categories={categories} /> : ""}
+        {posts ? <Posts posts={posts}/> : ""}
     </div>
   )
 }

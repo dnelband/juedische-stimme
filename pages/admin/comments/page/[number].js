@@ -1,28 +1,30 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectComments } from 'lib/queries'
 import styles from 'styles/Home.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { setComments } from 'store/comments/commentsSlice';
 
 export default function AdminCommentsPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch()
+  const { comments } = useSelector(state => state.comments)
+  useEffect(() => {
+      dispatch(setComments(JSON.parse(props.comments)))
+  },[])
 
-    useEffect(() => {
-        dispatch({type:"SET_COMMENTS",payload:JSON.parse(props.comments)})
-    },[])
-
-    let commentsDisplay;
-    if (state.comments){
-      /* 
-        TO DO
-        none of the pages should have data - render logic. 
-        mapping of comments should be handled by a dedicated Comments or AdminComments component 
-      */
-        commentsDisplay = state.comments.map((comment,index) => (
-            <li key={index}>{comment.comment_content}</li>
-        ))
-    }
+  let commentsDisplay;
+  if (comments){
+    /* 
+      TO DO
+      none of the pages should have data - render logic. 
+      mapping of comments should be handled by a dedicated Comments or AdminComments component 
+    */
+      commentsDisplay = comments.map((comment,index) => (
+          <li key={Date.now()}>{comment.comment_content}</li>
+      ))
+  }
 
     return (
         <div className={styles.container}>

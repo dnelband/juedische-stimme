@@ -1,24 +1,24 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectPostsByTag } from 'lib/queries'
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setPosts } from 'store/posts/postsSlice';
+
 export default function PostsPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch();
+  const { posts } = useSelector(state => state.posts)
 
   useEffect(() => {
-    // example how to use state && dispatch in app
-    dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
+    dispatch(setPosts(JSON.parse(props.posts)))
   },[])
-
-  // console.log(state.posts)
 
   return (
     <div className={styles.container}>
-        {state.posts ? <Posts posts={state.posts}/> : ""}
+        {posts ? <Posts posts={posts}/> : ""}
         {/* PAGINATION NEEDED */
         // get total number of items - in this case post by COUNTING the table rows
         // create a reuseable component to display pagination

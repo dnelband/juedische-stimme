@@ -63,8 +63,6 @@ const TagForm = (props) => {
         }, (error) => {
             console.log(error, "ERROR on add tag to post");
         });
-
-        // create a new wp_terms, wp_term_taxonomy, wp_term_relationships
     }
 
     async function addTagToPost(tag,tagIndex){

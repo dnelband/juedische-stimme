@@ -1,28 +1,27 @@
-
-
-import React, {useEffect, useState, useContext } from 'react'
-import { Context } from 'context';
+import React, {useEffect } from 'react'
 import dateTimeHelper from 'helpers/dateTimeHelper'
 import axios from 'axios'
 import renderToString from 'helpers/renderToString';
 
+import { setEvents  } from 'store/fbdata/fbDataSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 const FacebookEvents = (props) => {
-    
-    const { state, dispatch } = useContext(Context)
-    const [ events, setEvents ] = useState()
+
+    const dispatch = useDispatch();
+    const token = useSelector(state => state.fbData.token)
+    const events = useSelector(state => state.fbData.events);
 
     useEffect(() => {
-        if (state.facebook.token) initFacebookEvents()
-    }, [state.facebook])
+        if (token) initFacebookEvents()
+    }, [token])
     
     async function initFacebookEvents(){
-        if (!state.facebook.events){
+        if (!events){
             fetchFacebookEvents()
         } else {
-            setEvents(JSON.parse(state.facebook.events.content))
-            
-            const fbEventsUpdatedMonth = parseInt(state.facebook.events.date_updated.split('-')[1]);
-            const fbEventsUpdatedDay = parseInt(state.facebook.events.date_updated.split('-')[2])
+            const fbEventsUpdatedMonth = parseInt(events.date_updated.split('-')[1]);
+            const fbEventsUpdatedDay = parseInt(events.date_updated.split('-')[2])
             const today = new Date();
             const month = today.getMonth() + 1;
             const day = today.getDate();
@@ -31,7 +30,7 @@ const FacebookEvents = (props) => {
     }
 
     async function fetchFacebookEvents(){
-        const res  = await fetch(`https://graph.facebook.com/1297004353776035/events?limit=3&access_token=${state.facebook.token}`)
+        const res  = await fetch(`https://graph.facebook.com/1297004353776035/events?limit=3&access_token=${token}`)
         const fetchedEvents = await res.json()
         // remove all the weird characters from the content to avoid mySql errors
         if (fetchedEvents.data && fetchedEvents.data.length > 0){
@@ -45,7 +44,9 @@ const FacebookEvents = (props) => {
                     type:'events'
                 }
             }).then((response) => {
-                setEvents(fetchedEvents.data)
+                console.log(fetchedEvents, " FETCHED EVENTS")
+                dispatch(setEvents(fetchedEvents.data))
+                // setEvents(fetchedEvents.data)
                 console.log(response,"response on create fb feed record");
                 // window.location.href = "/admin/posts/page/1" // BETTER FETCH THE POSTS THEN REFRESH PAGE
             }, (error) => {
@@ -56,8 +57,9 @@ const FacebookEvents = (props) => {
     }
 
     let eventsDisplay;
-    if (events && events.length > 0){
-        eventsDisplay = events.map((fbEvent, index) => {
+    if (events && events.content && events.content.length > 0){
+        const eventsArray = JSON.parse(events.content);
+        eventsDisplay = eventsArray.map((fbEvent, index) => {
             if (index <= 2){
                 return (
                     <div key={index} style={{width: "33%", float: "left",padding:"5px"}}>

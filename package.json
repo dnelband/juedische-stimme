@@ -12,6 +12,7 @@
     "kill": "pm2 stop ecosystem.config.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
     "@tiptap/extension-image": "^2.0.0-beta.27",
     "@tiptap/react": "^2.0.0-beta.109",
     "@tiptap/starter-kit": "^2.0.0-beta.185",
@@ -23,7 +24,9 @@
     "next-connect": "^0.12.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-redux": "^8.0.2",
     "react-uuid": "^1.0.2",
+    "redux": "^4.2.0",
     "serverless-mysql": "^1.5.4"
   },
   "devDependencies": {

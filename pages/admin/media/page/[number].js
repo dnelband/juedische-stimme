@@ -1,22 +1,23 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import { selectMediaItems } from 'lib/queries'
 import excuteQuery from 'lib/db'
 import styles from 'styles/Home.module.css'
 import MediaItems from 'components/admin/MediaItems';
+import { useDispatch, useSelector } from 'react-redux'
+import { setMediaItems } from 'store/mediaitems/mediaItemsSlice';
 
-export default function AdminMediaPage({mediaItems}) {
-  
-  const { state, dispatch } = useContext(Context);
+
+export default function AdminMediaPage(props) {
+    
+  const dispatch = useDispatch();
+  const { mediaItems } = useSelector(state => state.mediaItems)
 
   useEffect(() => {
-      dispatch({type:"SET_MEDIA_ITEMS",payload:JSON.parse(mediaItems)})
+      dispatch(setMediaItems(JSON.parse(props.mediaItems)))
   },[])
 
   let mediaItemsDisplay;
-  if (state.mediaItems){
-      mediaItemsDisplay = <MediaItems mediaItems={state.mediaItems} />
-  }
+  if (mediaItems) mediaItemsDisplay = <MediaItems mediaItems={mediaItems} />
 
   return (
       <div className={styles.container}>

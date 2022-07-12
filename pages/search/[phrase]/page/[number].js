@@ -1,24 +1,25 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectPostsBySearchPhrase } from 'lib/queries'
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPosts } from 'store/posts/postsSlice';
 
 export default function PostsPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch()
+  const { posts } = useSelector(state => state.posts)
 
   useEffect(() => {
-    // example how to use state && dispatch in app
-    dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
+    dispatch(setPosts(JSON.parse(props.posts)))
   },[])
 
-  console.log(state.posts, " POSTS")
+  console.log(posts, " POSTS")
 
   return (
     <div className={styles.container}>
-        {state.posts && state.posts.length > 0 ? <Posts posts={state.posts} phrase={props.phrase}/> : <h2>nothing found for {'"' + props.phrase + '"'}!</h2>}
+        {posts && posts.length > 0 ? <Posts posts={posts} phrase={props.phrase}/> : <h2>nothing found for {'"' + props.phrase + '"'}!</h2>}
     </div>
   )
 }

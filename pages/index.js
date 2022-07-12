@@ -1,8 +1,12 @@
-import { useContext, useEffect } from 'react'
-import { Context } from 'context';
+import { useEffect } from 'react'
 
 import excuteQuery from 'lib/db'
 import { selectGalleryById, selectPosts } from 'lib/queries';
+
+import { useDispatch, useSelector } from 'react-redux'
+import { setToken, setEvents, setFeed } from 'store/fbdata/fbDataSlice'
+import { setHeaderGallery } from 'store/galleries/galleriesSlice';
+import { setPosts } from 'store/posts/postsSlice';
 
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
@@ -10,23 +14,28 @@ import FacebookFeed from 'components/FacebookFeed';
 import FacebookEvents from 'components/FacebookEvents';
 
 export default function Home(props) {
-  const { state, dispatch } = useContext(Context);
+
+  const dispatch = useDispatch();
+
+  const { posts } = useSelector(state => state.posts)
+  const { headerGallery } = useSelector(state => state.galleries)
+
+  console.log(useSelector(state => state))
+
   useEffect(() => {
-    dispatch({type:'SET_HEADER_GALLERY', payload:JSON.parse(props.headerGallery)[0]})
-    dispatch({type:'SET_POSTS',payload:JSON.parse(props.posts)})
-    dispatch({type:'SET_FB_DATA',payload:{
-      token:JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null,
-      feed:JSON.parse(props.fbFeed)[0],
-      events:JSON.parse(props.fbEvents)[0]
-    }})
+    dispatch(setHeaderGallery(JSON.parse(props.headerGallery)[0]))
+    dispatch(setPosts(JSON.parse(props.posts)))
+    dispatch(setToken(JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null))
+    dispatch(setEvents(JSON.parse(props.fbEvents)[0]))
+    dispatch(setFeed(JSON.parse(props.fbFeed)[0]))
   },[])
   return (
     <div className={styles.container}>
         <h1>HEADER BANNER THING</h1>
         {
-          state.headerGallery && state.headerGallery.imageSrcs 
+          headerGallery && headerGallery.imageSrcs 
           ?
-          state.headerGallery.imageSrcs.split(',').map((imageSrc,index)=>(
+          headerGallery.imageSrcs.split(',').map((imageSrc,index)=>(
             <img key={index} width="200" src={`/wp-content/uploads/${imageSrc}`}/>
           ))
           :
@@ -39,7 +48,7 @@ export default function Home(props) {
         </article>
         <hr/>
         <h1> LATEST POSTS:</h1>
-        {state.posts ? <Posts posts={state.posts}/> : ""}
+        {posts ? <Posts posts={posts}/> : ""}
         <hr/>
         <FacebookEvents/>
         <hr/>

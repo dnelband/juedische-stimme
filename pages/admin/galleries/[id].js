@@ -1,20 +1,32 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context"
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectGalleryById, selectGalleryImagesByGalleryId } from 'lib/queries'
 import GalleryForm from 'components/admin/GalleryForm'
 import styles from 'styles/Home.module.css'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setGallery } from 'store/galleries/galleriesSlice'
+
+
 export default function EditGalleryPage(props) {
-  const { state, dispatch } = useContext(Context);
+  
+  const dispatch = useDispatch();
+
+  const { gallery } = useSelector(state => state.galleries)
+
   useEffect(() => {
-    dispatch({type:'SET_GALLERY',payload:{gallery:JSON.parse(props.gallery)[0],images:JSON.parse(props.galleryImages)}})
+    dispatch(
+      setGallery({
+        gallery:JSON.parse(props.gallery)[0],
+        images:JSON.parse(props.galleryImages)
+      })
+    )
   },[])
 
   return (
     <div className={styles.container}>
       <h2>EDIT GALLERY</h2>
-      {state.gallery ? <GalleryForm gallery={state.gallery} /> : ''}
+      {gallery ? <GalleryForm gallery={gallery} /> : ''}
     </div>
   )
 }

@@ -1,16 +1,20 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
+
 import styles from 'styles/Home.module.css'
 import excuteQuery from 'lib/db'
-import { Context } from "context"
 import PostForm from 'components/admin/PostForm'
 import { selectCategories } from 'lib/queries'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setCatgories } from 'store/categories/categoriesSlice'
+
 export default function CreatePostPage(props) {
-  
-  const { state, dispatch } = useContext(Context);
-  
+    
+  const dispatch = useDispatch()
+  const { categories } = useSelector(state => state.categories)
+
   useEffect(() => {
-    dispatch({type:'SET_CATEGORIES',payload:JSON.parse(props.categories)})
+    dispatch(setCatgories(JSON.parse(props.categories)))
   },[])
 
   let nextPostId = JSON.parse(props.nextPostId).length > 0 ? JSON.parse(props.nextPostId)[0].max_id : ''
@@ -20,7 +24,7 @@ export default function CreatePostPage(props) {
       <h2>NEW POST</h2>
       <PostForm 
         nextPostId={nextPostId}
-        categories={state.categories}
+        categories={categories}
       />
     </div>
   )

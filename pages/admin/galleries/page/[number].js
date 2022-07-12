@@ -1,23 +1,26 @@
-import { useContext, useEffect } from 'react'
-import { Context } from "context";
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectGalleries } from 'lib/queries'
 import styles from 'styles/Home.module.css'
 import Galleries from 'components/admin/Galleries';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setGalleries } from 'store/galleries/galleriesSlice';
+
 export default function AdminCommentsPage(props) {
   
-  const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch();
+  const { galleries } = useSelector(state => state.galleries)
 
     useEffect(() => {
-        dispatch({type:"SET_GALLERIES",payload:JSON.parse(props.galleries)})
+        dispatch(setGalleries(JSON.parse(props.galleries)))
     },[])
 
     return (
         <div className={styles.container}>
             <h2>Galleries</h2>
             <hr/>
-            <ul>{state.galleries ? <Galleries galleries={state.galleries} /> : ""}</ul>
+            <ul>{galleries ? <Galleries galleries={galleries} /> : ""}</ul>
         </div>
     )
 }

@@ -12,13 +12,13 @@ import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
 import FacebookFeed from 'components/FacebookFeed';
 import FacebookEvents from 'components/FacebookEvents';
+import Header from 'components/Header';
 
 export default function Home(props) {
 
   const dispatch = useDispatch();
 
   const { posts } = useSelector(state => state.posts)
-  const { headerGallery } = useSelector(state => state.galleries)
 
   // console.log(useSelector(state => state))
 
@@ -32,21 +32,7 @@ export default function Home(props) {
   
   return (
     <div className={styles.container}>
-        <h1>HEADER BANNER THING</h1>
-        {
-          headerGallery && headerGallery.imageSrcs 
-          ?
-          headerGallery.imageSrcs.split(',').map((imageSrc,index)=>(
-            <img key={index} width="200" src={`/wp-content/uploads/${imageSrc}`}/>
-          ))
-          :
-          ""
-        }
-        <hr/>
-        <article>
-          <h1>THE HEADER TEXT TITLE</h1>
-          <p>header text description </p>
-        </article>
+        <Header />
         <hr/>
         <h1> LATEST POSTS:</h1>
         {posts ? <Posts posts={posts}/> : ""}
@@ -57,12 +43,14 @@ export default function Home(props) {
         <blockquote>BUTTONS AND CALL TO ACTION</blockquote>
         <hr/>
         <h1>SUGN UP TO NEWSLETTER</h1>
+        <div>SIGN UP TO NEWSLETTER COMPONENET!</div>
         <hr/>
         <FacebookFeed /> 
         <hr/>
         <h1>
-          GALLERY OR WHATEBER
+          ABOUT US GALLERY
         </h1>
+        <div>SHOW A GALERY HERE!</div>
     </div>
   )
 }

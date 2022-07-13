@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import styles from 'styles/Footer.module.css'
 
 export const Footer = () => {
 
@@ -16,16 +17,20 @@ export const Footer = () => {
   }
 
   return (
-    <footer>
-        <div style={{backgroundColor:"black",color:"white", marginTop:"50px",padding:"30px 100px"}}>
-          <ul>
+    <footer id={styles.footer}>
+          <div className={styles.contactFormContainer}>
+            CONTACT FORM!
+          </div>
+          <ul className={styles.footerSideMenu}>
               {navItems.map((item,index)=>(
                   <li key={index}>
                       <Link href={'/'+item.post_name}>{item.post_title}</Link>
                   </li>
               ))}
           </ul>
-        </div>
+          <div className={styles.footerBottomMenu}>
+            BOTTOM MENU!!
+          </div>
     </footer>
   )
 }

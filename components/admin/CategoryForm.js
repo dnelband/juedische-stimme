@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Suspense } from 'react';
+import dynamic from 'next/dynamic'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import styles from 'styles/Form.module.css';
-import TiptapEditor from '../tiptap/TipTapEditor';
 
+const DynamicTiptapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
+    suspense:true
+})
 const CategoryForm = ({category}) => {
 
     // console.log(category)
@@ -55,13 +58,15 @@ const CategoryForm = ({category}) => {
                 </div>
                 <div className={styles['form-row']}>
                     <label htmlFor='description'>CATEGORY DESCRIPTION</label>
-                    <TiptapEditor 
-                        id="description"
-                        name="description"
-                        type="description"
-                        onChange={val => formik.setFieldValue('description',val,true)}
-                        value={formik.values.description}
-                    />
+                    <Suspense fallback={"LOADING..."}>
+                        <DynamicTiptapEditor
+                            id="description"
+                            name="description"
+                            type="description"
+                            onChange={val => formik.setFieldValue('description',val,true)}
+                            value={formik.values.description}
+                        />
+                    </Suspense>
                 </div>
                 <div className={styles['form-row']}>
                     <button type="submit">Submit</button>

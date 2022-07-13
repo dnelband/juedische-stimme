@@ -1,9 +1,12 @@
-import React, { useRef} from 'react';
+import React, {Suspense, useRef } from 'react';
+import dynamic from 'next/dynamic'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import styles from 'styles/Form.module.css';
-import TipTapEditor from 'components/tiptap/TipTapEditor';
-import uuid from 'react-uuid'
+
+const DynamicTiptapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
+    suspense:true
+})
 
 function GalleryImageForm({galleryImage, galleryId, addImageToGallery}){
 
@@ -107,15 +110,17 @@ function GalleryImageForm({galleryImage, galleryId, addImageToGallery}){
                 </div>
                 <div className={styles['form-row']}>
                     <label htmlFor='image_description'>IMAGE DESCRIPTION</label>
-                    <TipTapEditor
-                        id="image_description"
-                        name="image_description"
-                        type="image_description"
-                        onChange={val => formik.setFieldValue('image_description',val,true)}
-                        value={formik.values.image_description}
-                        showMenu={false}
-                        height={"200px"}
-                    />
+                    <Suspense fallback={"LOADING..."}>
+                        <DynamicTiptapEditor
+                            id="image_description"
+                            name="image_description"
+                            type="image_description"
+                            onChange={val => formik.setFieldValue('image_description',val,true)}
+                            value={formik.values.image_description}
+                            showMenu={false}
+                            height={"200px"}
+                        />
+                    </Suspense>
                 </div>
                 <a style={{border:"1px solid black", cursor:"pointer"}} onClick={onUpladImageClick}>
                     INSERT IMAGE BUTTON!!

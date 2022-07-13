@@ -20,7 +20,7 @@ export default function Home(props) {
   const { posts } = useSelector(state => state.posts)
   const { headerGallery } = useSelector(state => state.galleries)
 
-  console.log(useSelector(state => state))
+  // console.log(useSelector(state => state))
 
   useEffect(() => {
     dispatch(setHeaderGallery(JSON.parse(props.headerGallery)[0]))
@@ -29,6 +29,7 @@ export default function Home(props) {
     dispatch(setEvents(JSON.parse(props.fbEvents)[0]))
     dispatch(setFeed(JSON.parse(props.fbFeed)[0]))
   },[])
+  
   return (
     <div className={styles.container}>
         <h1>HEADER BANNER THING</h1>
@@ -78,9 +79,10 @@ export const getServerSideProps = async () => {
   const postsResponse = await excuteQuery({
     query: selectPosts({
       numberOfPosts:6,
-      pageNume:0,
+      pageNum:0,
       showUnpublished:false,
-      postType:"post"
+      postType:"post",
+      fieldsList:["ID","post_author","post_date","post_date_gmt","post_content","post_title","post_name"]
     })
   });
   const posts = JSON.stringify(postsResponse);

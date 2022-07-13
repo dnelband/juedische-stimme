@@ -1,9 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {Suspense } from 'react';
+import dynamic from 'next/dynamic'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import dateTimeHelper from 'helpers/dateTimeHelper';
 import styles from 'styles/Form.module.css';
-import TiptapEditor from '../tiptap/TipTapEditor';
+
+const DynamicTiptapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
+  suspense:true
+})
+
 import TagForm from './TagForm';
 
 const PostForm = ({post,nextPostId,categories}) => {
@@ -99,15 +104,17 @@ const PostForm = ({post,nextPostId,categories}) => {
         </div>
         <div className={styles['form-row']}>
           <label htmlFor='post_content'>Post Content</label>
-          <TiptapEditor 
-              id="post_content"
-              name="post_content"
-              type="post_content"
-              onChange={val => formik.setFieldValue('post_content',val,true)}
-              value={formik.values.post_content}
-              itemType={'post'}
-              itemId={post ? post.postId : nextPostId}   
-          />
+          <Suspense fallback={"LOADING..."}>
+            <DynamicTiptapEditor 
+                id="post_content"
+                name="post_content"
+                type="post_content"
+                onChange={val => formik.setFieldValue('post_content',val,true)}
+                value={formik.values.post_content}
+                itemType={'post'}
+                itemId={post ? post.postId : nextPostId}   
+            />
+          </Suspense>
         </div>
         <div className={styles['form-row']}>
           <TagForm 

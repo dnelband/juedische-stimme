@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {Suspense } from 'react';
+import dynamic from 'next/dynamic'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import styles from 'styles/Form.module.css';
-import TiptapEditor from '../tiptap/TipTapEditor';
 import GalleryImageForm from './GalleryImageForm';
 
+const DynamicTiptapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
+    suspense:true
+})
+  
 function GalleryForm({gallery}){
-
-    
 
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
@@ -79,13 +81,15 @@ function GalleryForm({gallery}){
                 </div>
                 <div className={styles['form-row']}>
                     <label htmlFor='gallery_description'>GALLERY DESCRIPTION</label>
-                    <TiptapEditor 
-                        id="gallery_description"
-                        name="gallery_description"
-                        type="gallery_description"
-                        onChange={val => formik.setFieldValue('gallery_description',val,true)}
-                        value={formik.values.gallery_description}
-                    />
+                    <Suspense fallback={"LOADING..."}>
+                        <DynamicTiptapEditor 
+                            id="gallery_description"
+                            name="gallery_description"
+                            type="gallery_description"
+                            onChange={val => formik.setFieldValue('gallery_description',val,true)}
+                            value={formik.values.gallery_description}
+                        />
+                    </Suspense>
                 </div>
                 <div className={styles['form-row']}>
                     <button type="submit">Submit</button>

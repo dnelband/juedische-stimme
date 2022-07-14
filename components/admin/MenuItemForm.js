@@ -41,7 +41,10 @@ const MenuItemForm = ({menuItem}) => {
         if (searchPhrase && searchPhrase.length > 3){
             setShowPostOptions(true)
             getPostsBySearchPhrase()
-        } else setShowPostOptions(false)
+        } else {
+            setShowPostOptions(false)
+            setPostOptions([])
+        }
     },[searchPhrase])
 
     useEffect(() => {

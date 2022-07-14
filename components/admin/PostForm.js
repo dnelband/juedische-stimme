@@ -4,16 +4,16 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import dateTimeHelper from 'helpers/dateTimeHelper';
 import styles from 'styles/Form.module.css';
+// import TipTapEditor from '../tiptap/TipTapEditor';
 
-const DynamicTiptapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
-  suspense:true
+const TipTapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
+  suspense:true,
+  // loading: () => <p>Loading...</p>
 })
 
 import TagForm from './TagForm';
 
 const PostForm = ({post,nextPostId,categories}) => {
-
-  console.log(nextPostId, " NEXT POST ID")
 
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
@@ -104,8 +104,8 @@ const PostForm = ({post,nextPostId,categories}) => {
         </div>
         <div className={styles['form-row']}>
           <label htmlFor='post_content'>Post Content</label>
-          <Suspense fallback={"LOADING..."}>
-            <DynamicTiptapEditor 
+          <Suspense fallback={`Loading...`}>
+            <TipTapEditor
                 id="post_content"
                 name="post_content"
                 type="post_content"

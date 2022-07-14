@@ -5,8 +5,6 @@ import styles from 'styles/Form.module.css';
 
 const MenuItemForm = ({menuItem}) => {
 
-    console.log(menuItem)
-
     const [ searchPhrase, setSearchPhrase ] = useState('')
     const [ postOptions , setPostOptions ] = useState([])
     const [ showPostOptions, setShowPostOptions ] = useState(false)

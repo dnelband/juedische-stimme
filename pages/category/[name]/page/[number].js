@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
-import { selectCategories, selectPostsByTag } from 'lib/queries'
+import { selectCategories, selectNavItems, selectPostsByTag } from 'lib/queries'
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
 import SearchFilter from 'components/SearchFilter';
@@ -8,6 +8,7 @@ import SearchFilter from 'components/SearchFilter';
 import { useDispatch, useSelector } from 'react-redux'
 import { setPosts } from 'store/posts/postsSlice';
 import { setCatgories } from 'store/categories/categoriesSlice'
+import { setMenuItems } from 'store/nav/navSlice'
 
 export default function PostsPage(props) {
 
@@ -19,6 +20,7 @@ export default function PostsPage(props) {
   useEffect(() => {
     dispatch(setPosts(JSON.parse(props.posts)))
     dispatch(setCatgories(JSON.parse(props.categories)))
+    dispatch(setMenuItems(JSON.parse(props.navItems)))
   },[])
 
   return (
@@ -32,6 +34,12 @@ export default function PostsPage(props) {
 PostsPage.layout = "main"
 
 export const getServerSideProps = async (context) => {
+
+    const navItemsResponse = await excuteQuery({
+        query: selectNavItems()
+    });
+    const navItems = JSON.stringify(navItemsResponse)
+
     const postsResponse = await excuteQuery({
       query: selectPostsByTag(context.query.name.split(' ').join('-').toLowerCase(),10,context.query.number,true)
     });
@@ -46,7 +54,8 @@ export const getServerSideProps = async (context) => {
         posts,
         categories,
         categoryName:context.query.name,
-        pageNum:context.query.number
+        pageNum:context.query.number,
+        navItems
       }
     }
 }

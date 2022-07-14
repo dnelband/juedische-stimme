@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
-import { selectPostsBySearchPhrase } from 'lib/queries'
+import { selectNavItems, selectPostsBySearchPhrase } from 'lib/queries'
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPosts } from 'store/posts/postsSlice';
+import { setMenuItems } from 'store/nav/navSlice'
 
 export default function PostsPage(props) {
   
@@ -13,6 +14,7 @@ export default function PostsPage(props) {
 
   useEffect(() => {
     dispatch(setPosts(JSON.parse(props.posts)))
+    dispatch(setMenuItems(JSON.parse(props.navItems)))
   },[])
 
   console.log(posts, " POSTS")
@@ -27,6 +29,10 @@ export default function PostsPage(props) {
 PostsPage.layout = "main"
 
 export const getServerSideProps = async (context) => {
+    const navItemsResponse = await excuteQuery({
+        query: selectNavItems()
+    });
+    const navItems = JSON.stringify(navItemsResponse) 
     const postsResponse = await excuteQuery({
       query: selectPostsBySearchPhrase(context.query.phrase,10,context.query.number)
     });
@@ -35,7 +41,8 @@ export const getServerSideProps = async (context) => {
       props:{
         posts:posts,
         phrase:context.query.phrase,
-        pageNum:context.query.number
+        pageNum:context.query.number,
+        navItems
       }
     }
   }

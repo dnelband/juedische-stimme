@@ -1,34 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Nav() {
-
-    const [ navItems, setNavItems ] = useState([])
-
-    useEffect(() => {
-        getNavData()
-    },[])
-
-    async function getNavData(){
-        const res  = await fetch('/api/nav')
-        const data = await res.json();
-        setNavItems(data)
-    }
-
-  return (
-    <nav>
-        <ul>
-            <li>
-                <Link href={"/"}>Home</Link>
-            </li>
-            {navItems.map((item,index)=>(
-                <li key={index}>
-                    <Link href={'/'+item.post_name}>{item.post_title}</Link>
+    const { items } = useSelector(state => state.nav)
+    return (
+        <nav>
+            <ul>
+                <li>
+                    <Link href={"/"}>Home</Link>
                 </li>
-            ))}
-        </ul>
-    </nav>
-  )
+                {items.map((item,index)=>(
+                    <li key={index}>
+                        <Link href={'/'+item.post_name}>{item.post_title}</Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
 }
 
 export default Nav

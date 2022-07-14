@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 
 import excuteQuery from 'lib/db'
-import { selectGalleryById, selectPosts } from 'lib/queries';
+import { selectGalleryById, selectNavItems, selectPosts } from 'lib/queries';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setEvents, setFeed } from 'store/fbdata/fbDataSlice'
 import { setHeaderGallery } from 'store/galleries/galleriesSlice';
 import { setPosts } from 'store/posts/postsSlice';
+import { setMenuItems } from 'store/nav/navSlice';
 
 import Posts from 'components/Posts'
 import styles from 'styles/Home.module.css'
@@ -16,6 +17,8 @@ import Header from 'components/Header';
 
 export default function Home(props) {
 
+  console.log(props.navItems)
+
   const dispatch = useDispatch();
 
   const { posts } = useSelector(state => state.posts)
@@ -23,6 +26,7 @@ export default function Home(props) {
   // console.log(useSelector(state => state))
 
   useEffect(() => {
+    dispatch(setMenuItems(JSON.parse(props.navItems)))
     dispatch(setHeaderGallery(JSON.parse(props.headerGallery)[0]))
     dispatch(setPosts(JSON.parse(props.posts)))
     dispatch(setToken(JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null))
@@ -59,6 +63,11 @@ Home.layout = "main"
 
 export const getServerSideProps = async () => {
 
+  const navItemsResponse = await excuteQuery({
+      query: selectNavItems()
+  });
+  const navItems = JSON.stringify(navItemsResponse)
+
   const headerGalleryResponse =  await excuteQuery({
     query: selectGalleryById(1)
   });
@@ -92,6 +101,7 @@ export const getServerSideProps = async () => {
 
   return {
     props:{
+      navItems,
       headerGallery,
       posts,
       fbFeed,

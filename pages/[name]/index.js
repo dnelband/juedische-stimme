@@ -13,7 +13,7 @@ export default function ContentPage(props) {
     dispatch(setMenuItems(JSON.parse(props.navItems)))
   },[])
   let page = JSON.parse(props.page)[0];
-  page.comments = JSON.parse(props.comments)
+  if (props.comments) page.comments = JSON.parse(props.comments)
   return (
     <div className={styles.container}>
       <Post post={page}/>
@@ -32,7 +32,7 @@ export const getServerSideProps = async (context) => {
     query: selectPostByName(context.query.name)
   });
   const page = JSON.stringify(pageResponse);
-  let comments;
+  let comments = null;
   if (pageResponse.length > 0){
     const commentsReponse = await excuteQuery({
       query: selectCommentsByPostId(pageResponse[0].ID)

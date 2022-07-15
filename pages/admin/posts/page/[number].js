@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
         fieldsList:['post_title','post_name','post_date']})
     });
     const posts = JSON.stringify(postsResponse);
-    
+    console.log(posts, " POSTS ")
     return {
       props:{
         posts,

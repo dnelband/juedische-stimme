@@ -11,7 +11,7 @@ const TipTapEditor =  dynamic(() => import('../tiptap/TipTapEditor'), {
   // loading: () => <p>Loading...</p>
 })
 
-import TagForm from './TagForm';
+import PostTagForm from './PostTagForm';
 
 const PostForm = ({post,nextPostId,categories}) => {
 
@@ -117,7 +117,7 @@ const PostForm = ({post,nextPostId,categories}) => {
           </Suspense>
         </div>
         <div className={styles['form-row']}>
-          <TagForm 
+          <PostTagForm 
             postId={post ? post.postId : nextPostId}
           />          
         </div>

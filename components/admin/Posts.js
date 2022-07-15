@@ -4,7 +4,38 @@ import axios from 'axios'
 function Posts({posts}) {
 
     function deletePost(post){
-
+        console.log(post)
+        // let deleteRequests = [];
+        // if (post.tagIds !== null){
+        //   let tagIds = post.tagIds.split(',')
+        //   tagIds.forEach(function(tagId,index){
+        //     const deleteTagPostRelationShip = `/api/tags/${post.postId}/${tagId}`;
+        //     const deleteTagPostRelationShipRequest = axios.delete(deleteTagPostRelationShip)
+        //   })
+        // }
+        // const deleteGalleryUrl = `/api/galleries/${gallery.gallery_id}`
+        // const deleteGalleryRequest = axios.delete(deleteGalleryUrl)
+        // deleteRequests.push(deleteGalleryRequest);
+  
+        // axios.all([...deleteRequests]).then(axios.spread((...responses) => {
+        //     console.log(responses)
+        //     window.location.reload()
+        //     // use/access the results 
+        // })).catch(errors => {
+        //     console.log(errors, " ERRORS")
+        //     // react on errors.
+        // })
+        /* 
+        axios({
+            method: 'delete',
+            url: `/api/tags/${props.postId}/${tag.term_id}`,
+        }).then((response) => {
+            console.log(response,"response on remove tag from post");
+            getPostTags()
+        }, (error) => {
+            console.log(error, "ERROR on remove tag from post");
+        });
+        */
         axios.delete(`/api/posts/${post.postId}`, {
             data: {
                 categoryId:post.categoryId

@@ -8,6 +8,7 @@ import users from './users/usersSlice'
 import mediaItems from './mediaitems/mediaItemsSlice'
 import comments from './comments/commentsSlice'
 import nav from './nav/navSlice'
+import tags from './tags/tagsSlice'
 
 const reducers = combineReducers({ 
   fbData,
@@ -17,7 +18,8 @@ const reducers = combineReducers({
   users,
   mediaItems,
   comments,
-  nav
+  nav,
+  tags
 })
 
 export default reducers;

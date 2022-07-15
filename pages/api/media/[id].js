@@ -3,9 +3,11 @@ import excuteQuery from 'lib/db'
 export default async (req, res) => {
     try {
         if (req.method === 'DELETE'){
+            
             const result = await excuteQuery({
                 query: `DELETE FROM wp_postmeta WHERE meta_id='${req.query.id}';`
             });
+
             console.log(result,"result")
             res.json(result)
         }

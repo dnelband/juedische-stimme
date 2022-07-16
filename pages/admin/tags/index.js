@@ -12,9 +12,6 @@ export default function AdminTagsPage(props) {
     const dispatch = useDispatch();
     const { tags } = useSelector(state => state.tags)
     
-    console.log(props.tags)
-    console.log(tags, " TAGS ")
-
     useEffect(() => {
         dispatch(setTags(JSON.parse(props.tags)))
     },[])
@@ -37,7 +34,6 @@ export const getServerSideProps = async (context) => {
     query:selectTags()
   });
   const tags = JSON.stringify(tagsResponse);
-  console.log(tags, " TAGS ")
   return {
     props:{
         tags

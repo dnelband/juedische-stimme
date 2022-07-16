@@ -4,27 +4,31 @@ import axios from 'axios'
 function Posts({posts}) {
 
     function deletePost(post){
+
         console.log(post)
-        // let deleteRequests = [];
-        // if (post.tagIds !== null){
-        //   let tagIds = post.tagIds.split(',')
-        //   tagIds.forEach(function(tagId,index){
-        //     const deleteTagPostRelationShip = `/api/tags/${post.postId}/${tagId}`;
-        //     const deleteTagPostRelationShipRequest = axios.delete(deleteTagPostRelationShip)
-        //   })
-        // }
-        // const deleteGalleryUrl = `/api/galleries/${gallery.gallery_id}`
-        // const deleteGalleryRequest = axios.delete(deleteGalleryUrl)
-        // deleteRequests.push(deleteGalleryRequest);
-  
-        // axios.all([...deleteRequests]).then(axios.spread((...responses) => {
-        //     console.log(responses)
-        //     window.location.reload()
-        //     // use/access the results 
-        // })).catch(errors => {
-        //     console.log(errors, " ERRORS")
-        //     // react on errors.
-        // })
+        
+        let deleteRequests = [];
+        if (post.tagIds !== null){
+          let tagIds = post.tagIds.split(',')
+          tagIds.forEach(function(tagId,index){
+            const deleteTagPostRelationShipUrl = `/api/tags/${post.postId}/${tagId}`;
+            const deleteTagPostRelationShipRequest = axios.delete(deleteTagPostRelationShipUrl)
+            deleteRequests.push(deleteTagPostRelationShipRequest);
+          })
+        }
+
+        const deletePostUrl = `/api/posts/${post.postId}`
+        const deletePostRequest = axios.delete(deletePostUrl)
+        deleteRequests.push(deletePostRequest);
+        
+        axios.all([...deleteRequests]).then(axios.spread((...responses) => {
+            // console.log(responses)
+            window.location.reload()
+        })).catch(errors => {
+            console.log(errors, " ERRORS")
+            // react on errors.
+        })
+
         /* 
         axios({
             method: 'delete',
@@ -35,7 +39,7 @@ function Posts({posts}) {
         }, (error) => {
             console.log(error, "ERROR on remove tag from post");
         });
-        */
+        
         axios.delete(`/api/posts/${post.postId}`, {
             data: {
                 categoryId:post.categoryId
@@ -48,6 +52,7 @@ function Posts({posts}) {
             console.log(error, "ERROR on delete post");
             console.log('NOW NEEDS TO DISPLAY ERROR')
         });
+        */
     }
 
     let postsDisplay;

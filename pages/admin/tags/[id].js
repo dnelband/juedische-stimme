@@ -28,9 +28,6 @@ export const getServerSideProps = async (context) => {
     query: selectTagById(context.query.id)
   });
   const tag = JSON.stringify(tagResponse);
-  
-  console.log(tag, " TAG ")
-
   return {
     props:{
         tag

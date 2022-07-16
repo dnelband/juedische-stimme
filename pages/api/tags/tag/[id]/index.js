@@ -1,12 +1,12 @@
 import excuteQuery from 'lib/db'
-import { updateTag, updateTagSlug } from 'lib/queries';
+import { deleteTerm, deleteTermRelationships, deleteTermTaxonomy, updateTag, updateTagSlug } from 'lib/queries';
 
 export default async (req, res) => {
     try {
         if (req.method === 'POST'){ 
-
+            // CREATE A TAG WITHOUT A POST?
         } if (req.method === 'PUT'){
-            console.log(req.body)
+
             const updateTagResult = await excuteQuery({
                 query:updateTag(req.body)
             })
@@ -15,11 +15,17 @@ export default async (req, res) => {
             })
             res.json({message:"tag updated"})
         } else if (req.method === 'DELETE'){
-            // const result = await excuteQuery({
-            //     query: `DELETE FROM wp_postmeta WHERE meta_id='${req.query.id}';`
-            // });
-            // console.log(result,"result")
-            // res.json(result)
+            // delete wp_terms, wp_term_taxonomy, wp_term_relationships
+            const deleteTermResult = await excuteQuery({
+                query:deleteTerm(req.query.id)
+            });
+            const deleteTermTaxonomyResult = await excuteQuery({
+                query:deleteTermTaxonomy(req.query.id)
+            });
+            const deleteTermRelationshipsResult = await excuteQuery({
+                query:deleteTermRelationships(req.query.id)
+            });
+            res.json({message:"tag deleted!"})
         } else {
             // Handle any other HTTP method
             console.log('not post request')

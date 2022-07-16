@@ -49,7 +49,7 @@ export default async (req, res) => {
         }
         else {
             // Handle any other HTTP method
-                res.json({message:'no GET on this route (/api/posts/[id])!'})
+            res.json({message:'no GET on this route (/api/posts/[id])!'})
         }
     } catch ( error ) {
         console.log(error );

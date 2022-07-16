@@ -130,7 +130,7 @@ const PostTagForm = (props) => {
 
     return (
         <div>
-            <input type="text" onChange={e => setSearchPhrase(e.target.value)} placeholder={'Search or add a new tag'} />
+            <input type="text" value={searchPhrase} onChange={e => setSearchPhrase(e.target.value)} placeholder={'Search or add a new tag'} />
             <hr/>
             {newTagDisplay}
             {suggestedTagsDisplay}

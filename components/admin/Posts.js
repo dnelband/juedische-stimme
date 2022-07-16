@@ -15,8 +15,10 @@ function Posts({posts}) {
           })
         }
 
+        // const deleteCategoryPostRelationShipUrl = `/api/tags/${post.postId}/${tagId}`;
+
         const deletePostUrl = `/api/posts/${post.postId}`
-        const deletePostRequest = axios.delete(deletePostUrl)
+        const deletePostRequest = axios.delete(deletePostUrl,{data:{categoryId:post.categoryId}})
         deleteRequests.push(deletePostRequest);
         
         axios.all([...deleteRequests]).then(axios.spread((...responses) => {

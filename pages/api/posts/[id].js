@@ -1,4 +1,4 @@
-import { decreaseTermTaxonomyCount, deletePost, incrementTermTaxonomyCount, updatePost, updateTermRelationship } from 'lib/queries';
+import { decreaseTermTaxonomyCount, deletePost, deleteTermRelationship, incrementTermTaxonomyCount, updatePost, updateTermRelationship } from 'lib/queries';
 import excuteQuery from 'lib/db'
 
 export default async (req, res) => {
@@ -40,11 +40,20 @@ export default async (req, res) => {
             const result = await excuteQuery({
                 query: deletePost(req.query.id)
             });
-            const decreaseCategoryCountResult = await excuteQuery({
-                query:decreaseTermTaxonomyCount(req.body.categoryId)
+
+            const deleteTermRelationshipResult = await excuteQuery({
+                query: deleteTermRelationship(req.body.categoryId,req.query.id)
             })
-            console.log(decreaseCategoryCountResult," decreaseCategoryCountResult")
+
+            console.log(req.body, " REQ BODY!!!!!")
+
+            const decreaseCategoryCountResult = await excuteQuery({
+                query:`UPDATE wp_term_taxonomy SET count=count-1 WHERE term_id=${req.body.categoryId}`
+            })
+            console.log(decreaseCategoryCountResult, " DECREASE CATEGORY COuNT RESUTL")
+
             // console.log(result,"result")
+
             res.json(result)
         }
         else {

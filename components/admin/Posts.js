@@ -4,8 +4,6 @@ import axios from 'axios'
 function Posts({posts}) {
 
     function deletePost(post){
-
-        console.log(post)
         
         let deleteRequests = [];
         if (post.tagIds !== null){
@@ -28,31 +26,6 @@ function Posts({posts}) {
             console.log(errors, " ERRORS")
             // react on errors.
         })
-
-        /* 
-        axios({
-            method: 'delete',
-            url: `/api/tags/${props.postId}/${tag.term_id}`,
-        }).then((response) => {
-            console.log(response,"response on remove tag from post");
-            getPostTags()
-        }, (error) => {
-            console.log(error, "ERROR on remove tag from post");
-        });
-        
-        axios.delete(`/api/posts/${post.postId}`, {
-            data: {
-                categoryId:post.categoryId
-            }
-        }).then((response) => {
-            window.location.reload()
-            console.log(response,"response on delete post");
-            console.log('NOW NEEDS TO REFRESH POSTS LIST!');
-        }, (error) => {
-            console.log(error, "ERROR on delete post");
-            console.log('NOW NEEDS TO DISPLAY ERROR')
-        });
-        */
     }
 
     let postsDisplay;

@@ -28,7 +28,8 @@
     "react-uuid": "^1.0.2",
     "redux": "^4.2.0",
     "serverless-mysql": "^1.5.4",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "axios": "^0.27.2",

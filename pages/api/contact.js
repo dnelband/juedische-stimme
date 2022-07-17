@@ -19,9 +19,6 @@ export default async (req, res) => {
                 // }
             })
 
-
-            console.log(process.env.SMTP_HOST, process.env.SMTP_USER, process.env.SMTP_PASSWORD)
-
             const mailData = {
                 from: {
                     name: req.body.email,
@@ -35,21 +32,13 @@ export default async (req, res) => {
             }
 
             transporter.sendMail(mailData, function (err, info) {
-                console.log("HELLO")
                 if(err){
-                    console.log(err, " ERR!")
                     res.json({type:'error',error:err})
                 }
                 else {
-                    console.log(info, " INFO!")
                     res.json({type:'success',info:info})
                 }
             })
-
-            // res.json({message:'email sent!'})
-            console.log(req.body)
-            // console.log(result)
-            // res.json(result)
         } else {
             res.json({message:'NO GET HERE!'})
         }

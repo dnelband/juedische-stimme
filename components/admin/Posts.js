@@ -9,13 +9,11 @@ function Posts({posts}) {
         if (post.tagIds !== null){
           let tagIds = post.tagIds.split(',')
           tagIds.forEach(function(tagId,index){
-            const deleteTagPostRelationShipUrl = `/api/tags/${post.postId}/${tagId}`;
-            const deleteTagPostRelationShipRequest = axios.delete(deleteTagPostRelationShipUrl)
-            deleteRequests.push(deleteTagPostRelationShipRequest);
+            const deleteTagPostRelationshipUrl = `/api/tags/${post.postId}/${tagId}`;
+            const deleteTagPostRelationshipRequest = axios.delete(deleteTagPostRelationshipUrl)
+            deleteRequests.push(deleteTagPostRelationshipRequest);
           })
         }
-
-        // const deleteCategoryPostRelationShipUrl = `/api/tags/${post.postId}/${tagId}`;
 
         const deletePostUrl = `/api/posts/${post.postId}`
         const deletePostRequest = axios.delete(deletePostUrl,{data:{categoryId:post.categoryId}})

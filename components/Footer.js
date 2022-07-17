@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styles from 'styles/Footer.module.css'
+import ContactForm from './ContactForm'
 
 export const Footer = () => {
 
@@ -19,7 +20,7 @@ export const Footer = () => {
   return (
     <footer id={styles.footer}>
           <div className={styles.contactFormContainer}>
-            CONTACT FORM!
+          <ContactForm/>
           </div>
           <ul className={styles.footerSideMenu}>
               {navItems.map((item,index)=>(

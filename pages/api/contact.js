@@ -14,27 +14,39 @@ export default async (req, res) => {
                   pass: process.env.SMTP_PASSWORD,
                 },
                 secure: true,
+                // tls: {
+                //     ciphers:'SSLv3'
+                // }
             })
 
+
+            console.log(process.env.SMTP_HOST, process.env.SMTP_USER, process.env.SMTP_PASSWORD)
+
             const mailData = {
-                from: 'info@juedische-stimme.com',
-                to: 'dnelband@gmail.com',
-                subject: `Message From ${req.body.name}`,
+                from: {
+                    name: req.body.email,
+                    address: 'info@juedische-stimme.com'
+                },
+                replyTo:req.body.email,
+                to: 'info@juedische-stimme.com',
+                subject: `Contact Message From ${req.body.name}`,
                 text: req.body.message,
-                html: <div>{req.body.message}</div>
+                html: `<div>${req.body.message}</div>`
             }
 
             transporter.sendMail(mailData, function (err, info) {
+                console.log("HELLO")
                 if(err){
-                    console.log(err)
+                    console.log(err, " ERR!")
                     res.json({type:'error',error:err})
                 }
                 else {
-                    console.log(info)
+                    console.log(info, " INFO!")
                     res.json({type:'success',info:info})
                 }
             })
 
+            // res.json({message:'email sent!'})
             console.log(req.body)
             // console.log(result)
             // res.json(result)

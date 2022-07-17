@@ -17,8 +17,6 @@ import Header from 'components/Header';
 
 export default function Home(props) {
 
-  console.log(props.navItems)
-
   const dispatch = useDispatch();
 
   const { posts } = useSelector(state => state.posts)

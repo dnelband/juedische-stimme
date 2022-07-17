@@ -28,24 +28,17 @@ const FacebookFeed = (props) => {
             const today = new Date();
             const month = today.getMonth() + 1;
             const day = today.getDate();
-
-            console.log(day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth)
-
             if (day !== fbFeedUpdatedDay || month !== fbFeedUpdatedMonth) fetchFacebookFeed()
         }
     }
 
     async function fetchFacebookFeed(){
         
-        console.log('FEATCH')
-
-        const pageTokenRes = await fetch(`https://graph.facebook.com/PAGE-ID?fields=access_token&access_token=${token}`)
-        const pageToken = await pageTokenRes.json()
-        console.log(pageToken, " PAGE TOKEN ")
+        // const pageTokenRes = await fetch(`https://graph.facebook.com/PAGE-ID?fields=access_token&access_token=${token}`)
+        // const pageToken = await pageTokenRes.json()
 
         const res  = await fetch(`https://graph.facebook.com/1297004353776035/feed?limit=3&fields=full_picture,story,message&access_token=${token}`)
         const fetchedFeed = await res.json()
-        console.log(fetchedFeed, " FETACHED FEED")
 
         // remove all the weird characters from the content to avoid mySql errors
         if (fetchedFeed.data && fetchedFeed.data.length > 0){

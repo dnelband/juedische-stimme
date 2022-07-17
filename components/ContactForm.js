@@ -6,8 +6,6 @@ import * as Yup from 'yup';
 
 const ContactForm = ({category}) => {
 
-    // console.log(category)
-
     const formik = useFormik({
         initialValues: {
             name:'',
@@ -34,7 +32,6 @@ const ContactForm = ({category}) => {
             }, (error) => {
                 console.log(error, "ERROR on send contact");
             });
-            console.log(values, " VALUJE ")
         },
     });
 

@@ -7,7 +7,7 @@ import Galleries from 'components/admin/Galleries';
 import { useDispatch, useSelector } from 'react-redux'
 import { setGalleries } from 'store/galleries/galleriesSlice';
 
-export default function AdminCommentsPage(props) {
+export default function AdminGalleriesPage(props) {
   
   const dispatch = useDispatch();
   const { galleries } = useSelector(state => state.galleries)
@@ -25,7 +25,7 @@ export default function AdminCommentsPage(props) {
     )
 }
 
-AdminCommentsPage.layout = "admin"
+AdminGalleriesPage.layout = "admin"
 
 export const getServerSideProps = async (context) => {
   const galleriesResponse = await excuteQuery({

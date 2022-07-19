@@ -76,6 +76,11 @@ const PostForm = ({post,nextPostId,categories}) => {
     ))
   }
 
+  /* 
+    TO DO: add translation forms per language in locales.
+    translation will be a record in the wp_post_meta table in the db
+  */
+
   return (
     <div className={styles.container}>
       {post ? <p><a target={"_blank"} rel="noreferrer" href={"/"+post.post_name}>view post on live site</a></p> : ""}

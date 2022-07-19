@@ -6,7 +6,6 @@ import posts from './posts/postsSlice'
 import categories from './categories/categoriesSlice'
 import users from './users/usersSlice'
 import mediaItems from './mediaitems/mediaItemsSlice'
-import comments from './comments/commentsSlice'
 import nav from './nav/navSlice'
 import tags from './tags/tagsSlice'
 
@@ -17,7 +16,6 @@ const reducers = combineReducers({
   categories,
   users,
   mediaItems,
-  comments,
   nav,
   tags
 })

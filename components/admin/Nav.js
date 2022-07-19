@@ -12,7 +12,6 @@ function AdminNav() {
         <li><Link href='/admin/galleries'>Galleries</Link></li>
         <li><Link href='/admin/media'>Media</Link></li>
         <li><Link href='/admin/menus'>Menus</Link></li>
-        <li><Link href='/admin/comments'>Comments</Link></li>
         <li><Link href='/admin/users'>Users</Link></li>
         <li><Link href='/admin/fbtoken'>Facebook Token</Link></li>
       </ul>

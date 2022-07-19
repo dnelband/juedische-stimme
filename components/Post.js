@@ -16,14 +16,6 @@ function Post({ post }) {
             if (post.tagNames.indexOf(',') > -1) tagsArray = post.tagNames.split(',')
             tagsDisplay = tagsArray.map((tag,index) => (<a key={index} href={"/tag/"+tag}>{' <' + tag + '> '}</a>))
         }
-        let commentsDisplay;
-        if (post.comments && post.comments.length > 0){
-            console.log(post.comments)
-            commentsDisplay = post.comments.map((comments,index)=>(
-                <div key={Date.now()}>
-                </div>
-            ))
-        }
         postDisplay = (
             <React.Fragment>
                 <h1>{post.post_title}</h1>

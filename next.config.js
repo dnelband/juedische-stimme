@@ -29,10 +29,6 @@ const nextConfig = {
         destination: '/admin/posts/page/1',
         permanent: false,
       },{
-        source: '/admin/comments',
-        destination: '/admin/comments/page/1',
-        permanent: false,
-      },{
         source: '/admin/media',
         destination: '/admin/media/page/1',
         permanent: false,

@@ -24,7 +24,8 @@
     "jsx": "preserve"
   },
   "include": [
-, "__tests__/index.test.js"    "next-env.d.ts",
+    "__tests__/index.test.js",
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],

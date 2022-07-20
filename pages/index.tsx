@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import type { NextPage } from 'next'
 
+import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectGalleryById, selectNavItems, selectPosts } from 'lib/queries';
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'store/store'
 import { setToken, setEvents, setFeed } from 'store/fbdata/fbDataSlice'
 import { setHeaderGallery } from 'store/galleries/galleriesSlice';
 import { setPosts } from 'store/posts/postsSlice';
@@ -15,13 +16,11 @@ import FacebookFeed from 'components/FacebookFeed';
 import FacebookEvents from 'components/FacebookEvents';
 import Header from 'components/Header';
 
-export default function Home(props) {
+export default function Home(props):NextPage {
 
   const dispatch = useDispatch();
 
   const { posts } = useSelector(state => state.posts)
-
-  // console.log(useSelector(state => state))
 
   useEffect(() => {
     dispatch(setMenuItems(JSON.parse(props.navItems)))

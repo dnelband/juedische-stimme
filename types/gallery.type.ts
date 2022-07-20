@@ -1,4 +1,4 @@
-import type { Image } from "./image.type";
+import type { Image } from "./Image.type";
 
 export type Gallery = {
     gallery_id: number;

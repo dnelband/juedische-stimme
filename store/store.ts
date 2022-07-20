@@ -16,12 +16,4 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 // Inferred type: { users: UsersState}
-type AppDispatch = typeof store.dispatch;
-
-// Since we use typescript, lets utilize `useDispatch`
-export const useDispatch = () => useDispatchBase<AppDispatch>();
-
-// And utilize `useSelector`
-export const useSelector = <TSelected = unknown>(
-  selector: (state: RootState) => TSelected
-): TSelected => useSelectorBase<RootState, TSelected>(selector);
+export type AppDispatch = typeof store.dispatch;

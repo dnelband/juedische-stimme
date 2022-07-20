@@ -1,10 +1,11 @@
-import type { NextPage } from 'next'
+import type { LayoutPage } from 'types/LayoutPage.type';
+import { LayoutPageProps } from 'types/LayoutPageProps.type';
 
 import { useEffect } from 'react'
 import excuteQuery from 'lib/db'
 import { selectGalleryById, selectNavItems, selectPosts } from 'lib/queries';
 
-import { useDispatch, useSelector } from 'store/store'
+import { useDispatch, useSelector } from 'store/hooks'
 import { setToken, setEvents, setFeed } from 'store/fbdata/fbDataSlice'
 import { setHeaderGallery } from 'store/galleries/galleriesSlice';
 import { setPosts } from 'store/posts/postsSlice';
@@ -16,7 +17,7 @@ import FacebookFeed from 'components/FacebookFeed';
 import FacebookEvents from 'components/FacebookEvents';
 import Header from 'components/Header';
 
-export default function Home(props):NextPage {
+const Home: LayoutPage = (props:LayoutPageProps) => {
 
   const dispatch = useDispatch();
 
@@ -107,3 +108,5 @@ export const getServerSideProps = async () => {
     }
   }
 }
+
+export default Home;

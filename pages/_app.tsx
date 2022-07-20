@@ -1,5 +1,5 @@
 import 'styles/globals.css'
-
+import { LayoutAppProps } from 'types/LayoutAppProps.type';
 import Layout from 'components/Layout';
 import AdminLayout from 'components/admin/Layout';
 import { store } from 'store/store';
@@ -10,7 +10,7 @@ const layouts = {
   "admin":AdminLayout
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: LayoutAppProps ){
     const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
     return (
         <Provider store={store}>

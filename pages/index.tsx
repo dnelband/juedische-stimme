@@ -24,12 +24,12 @@ const Home: LayoutPage = (props:LayoutPageProps) => {
   const { posts } = useSelector(state => state.posts)
 
   useEffect(() => {
-    dispatch(setMenuItems(JSON.parse(props.navItems)))
-    dispatch(setHeaderGallery(JSON.parse(props.headerGallery)[0]))
-    dispatch(setPosts(JSON.parse(props.posts)))
-    dispatch(setToken(JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null))
-    dispatch(setEvents(JSON.parse(props.fbEvents)[0]))
-    dispatch(setFeed(JSON.parse(props.fbFeed)[0]))
+    if (props.navItems) dispatch(setMenuItems(JSON.parse(props.navItems)))
+    if (props.headerGallery) dispatch(setHeaderGallery(JSON.parse(props.headerGallery)[0]))
+    if (props.posts) dispatch(setPosts(JSON.parse(props.posts)))
+    if (props.fbToken) dispatch(setToken(JSON.parse(props.fbToken).length > 0 ? JSON.parse(props.fbToken)[0].token : null))
+    if (props.fbEvents) dispatch(setEvents(JSON.parse(props.fbEvents)[0]))
+    if (props.fbFeed) dispatch(setFeed(JSON.parse(props.fbFeed)[0]))
   },[])
   
   return (

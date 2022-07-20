@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"]
+    },
     "target": "es5",
     "lib": [
       "dom",
@@ -21,7 +24,7 @@
     "jsx": "preserve"
   },
   "include": [
-    "next-env.d.ts",
+, "__tests__/index.test.js"    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
